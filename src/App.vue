@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <konva-stage :config="stageConfig">
+    <konva-stage :config="stageConfig" ref="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
         <konva-text :config="playerNameConfig" />
@@ -95,6 +95,23 @@ export default {
       const y = 97;
       return { ...this.fontSetting, text, x, y };
     },
+  },
+  methods: {
+    updateCanvas() {
+      this.$refs.stage.getNode().draw();
+    },
+  },
+  mounted() {
+    this.$watch(
+      "formInput",
+      function () {
+        const self = this;
+        setTimeout(function () {
+          self.updateCanvas();
+        }, 200);
+      },
+      { deep: true }
+    );
   },
   created() {
     const background = new window.Image();
