@@ -7,6 +7,11 @@
         <konva-text :config="favoriteColorConfig" />
         <konva-text :config="activityAreaConfig" />
         <konva-text :config="mtgHistoryConfig" />
+        <konva-image
+          v-for="(item, index) in noticeConfig"
+          :key="index"
+          :config="item"
+        />
         <konva-text :config="favoriteCardConfig" />
         <konva-text :config="favoriteDeckConfig" />
         <konva-text :config="freeSpaceConfig" />
@@ -93,6 +98,11 @@ export default {
       fontFamily: "Yusei Magic",
       wrap: "char",
     },
+    checkSetting: {
+      image: null,
+      width: 16,
+      height: 16,
+    },
     background: null,
   }),
   computed: {
@@ -119,6 +129,15 @@ export default {
       const x = 500;
       const y = 170;
       return { ...this.fontSetting, text, x, y };
+    },
+    noticeConfig() {
+      const checkArray = [];
+      const x = 24;
+      this.formInput.notice.forEach((item) => {
+        const index = this.noticeOptions.indexOf(item);
+        checkArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
+      });
+      return checkArray;
     },
     favoriteCardConfig() {
       const text = this.formInput.favoriteCard;
@@ -167,6 +186,12 @@ export default {
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     background.onload = () => {
       this.background = background;
+    };
+
+    const check = new window.Image();
+    check.src = require("@/assets/check.svg");
+    check.onload = () => {
+      this.checkSetting.image = check;
     };
   },
 };
