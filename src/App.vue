@@ -13,12 +13,12 @@
         <konva-text :config="mtgHistoryConfig" />
         <konva-image
           v-for="(item, index) in noticeConfig"
-          :key="index"
+          :key="`notice-${index}`"
           :config="item"
         />
         <konva-image
           v-for="(item, index) in playingFormatConfig"
-          :key="index"
+          :key="`format-${index}`"
           :config="item"
         />
         <konva-image
@@ -35,7 +35,7 @@
       <v-radio-group label="性別" v-model="formInput.gender" row>
         <v-radio
           v-for="(item, index) in genderOptions"
-          :key="index"
+          :key="`genderRadio-${index}`"
           :label="item"
           :value="item"
         />
@@ -60,7 +60,7 @@
       <v-radio-group label="カテゴリ" v-model="formInput.playerCategory" row>
         <v-radio
           v-for="(item, index) in playerCategoryOptions"
-          :key="index"
+          :key="`categoryRadio-${index}`"
           :label="item"
           :value="item"
         />
