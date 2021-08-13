@@ -221,8 +221,6 @@ export default {
     },
   },
   mounted() {
-    this.updateCanvas();
-
     this.$watch(
       "formInput",
       function () {
@@ -233,6 +231,10 @@ export default {
       },
       { deep: true }
     );
+
+    this.$watch("background", function () {
+      this.updateCanvas();
+    });
   },
   created() {
     const background = new window.Image();
