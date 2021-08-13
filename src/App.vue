@@ -1,30 +1,37 @@
 <template>
   <v-app>
-    <konva-stage :config="stageConfig">
+    <konva-stage :config="stageConfig" ref="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
+        <konva-text :config="playerNameConfig" />
+        <konva-text :config="favoriteColorConfig" />
+        <konva-text :config="activityAreaConfig" />
+        <konva-text :config="mtgHistoryConfig" />
+        <konva-text :config="favoriteCardConfig" />
+        <konva-text :config="favoriteDeckConfig" />
+        <konva-text :config="freeSpaceConfig" />
       </konva-layer>
     </konva-stage>
     <v-form>
-      <v-text-field label="プレイヤーネーム" v-model="playerName" />
-      <v-text-field label="好きな色" v-model="favoriteColor" />
-      <v-text-field label="活動地域" v-model="activityArea" />
-      <v-text-field label="MTG歴" v-model="mtgHistory" />
+      <v-text-field label="プレイヤーネーム" v-model="formInput.playerName" />
+      <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
+      <v-text-field label="活動地域" v-model="formInput.activityArea" />
+      <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
       <v-select
         label="要望&お知らせ"
-        v-model="notice"
+        v-model="formInput.notice"
         :items="noticeOptions"
         multiple
         chips
       />
       <v-select
         label="フォーマット"
-        v-model="playingFormat"
+        v-model="formInput.playingFormat"
         :items="playingFormatOptions"
         multiple
         chips
       />
-      <v-radio-group label="カテゴリ" v-model="playerCategory">
+      <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
         <v-radio label="初心者" value="初心者" />
         <v-radio
           label="カジュアル・エンジョイ"
@@ -32,9 +39,9 @@
         />
         <v-radio label="ガチ・競技" value="ガチ・競技" />
       </v-radio-group>
-      <v-textarea label="好きなカード" v-model="favoriteCard" />
-      <v-textarea label="好きなデッキ" v-model="favoriteDeck" />
-      <v-textarea label="フリースペース" v-model="freeSpace" />
+      <v-textarea label="好きなカード" v-model="formInput.favoriteCard" />
+      <v-textarea label="好きなデッキ" v-model="formInput.favoriteDeck" />
+      <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
     </v-form>
   </v-app>
 </template>
@@ -44,11 +51,18 @@ export default {
   name: "App",
 
   data: () => ({
-    playerName: "",
-    favoriteColor: "",
-    activityArea: "",
-    mtgHistory: "",
-    notice: [],
+    formInput: {
+      playerName: "",
+      favoriteColor: "",
+      activityArea: "",
+      mtgHistory: "",
+      notice: [],
+      playingFormat: [],
+      playerCategory: "",
+      favoriteCard: "",
+      favoriteDeck: "",
+      freeSpace: "",
+    },
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
@@ -60,7 +74,6 @@ export default {
       "MOやってます",
       "コレクション自慢したい",
     ],
-    playingFormat: [],
     playingFormatOptions: [
       "スタンダード",
       "ヒストリック",
@@ -71,16 +84,84 @@ export default {
       "統率者",
       "その他",
     ],
-    playerCategory: "",
-    favoriteCard: "",
-    favoriteDeck: "",
-    freeSpace: "",
     stageConfig: {
       width: 800,
       height: 450,
     },
+    fontSetting: {
+      fontSize: 24,
+      fontFamily: "Yusei Magic",
+      wrap: "char",
+    },
     background: null,
   }),
+  computed: {
+    playerNameConfig() {
+      const text = this.formInput.playerName;
+      const x = 190;
+      const y = 97;
+      return { ...this.fontSetting, text, x, y };
+    },
+    favoriteColorConfig() {
+      const text = this.formInput.favoriteColor;
+      const x = 190;
+      const y = 170;
+      return { ...this.fontSetting, text, x, y };
+    },
+    activityAreaConfig() {
+      const text = this.formInput.activityArea;
+      const x = 500;
+      const y = 97;
+      return { ...this.fontSetting, text, x, y };
+    },
+    mtgHistoryConfig() {
+      const text = this.formInput.mtgHistory;
+      const x = 500;
+      const y = 170;
+      return { ...this.fontSetting, text, x, y };
+    },
+    favoriteCardConfig() {
+      const text = this.formInput.favoriteCard;
+      const x = 324;
+      const y = 350;
+      const width = 150;
+      const height = 75;
+      return { ...this.fontSetting, text, x, y, width, height };
+    },
+    favoriteDeckConfig() {
+      const text = this.formInput.favoriteDeck;
+      const x = 500;
+      const y = 243;
+      const width = 280;
+      const height = 50;
+      return { ...this.fontSetting, text, x, y, width, height };
+    },
+    freeSpaceConfig() {
+      const text = this.formInput.freeSpace;
+      const x = 500;
+      const y = 350;
+      const width = 280;
+      const height = 75;
+      return { ...this.fontSetting, text, x, y, width, height };
+    },
+  },
+  methods: {
+    updateCanvas() {
+      this.$refs.stage.getNode().draw();
+    },
+  },
+  mounted() {
+    this.$watch(
+      "formInput",
+      function () {
+        const self = this;
+        setTimeout(function () {
+          self.updateCanvas();
+        }, 200);
+      },
+      { deep: true }
+    );
+  },
   created() {
     const background = new window.Image();
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
@@ -90,3 +171,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
+</style>
