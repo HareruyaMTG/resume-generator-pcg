@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <konva-stage :config="konvaConfig.stage"></konva-stage>
     <v-form>
       <v-text-field label="プレイヤーネーム" v-model="playerName" />
       <v-text-field label="好きな色" v-model="favoriteColor" />
@@ -70,6 +71,12 @@ export default {
     favoriteCard: "",
     favoriteDeck: "",
     freeSpace: "",
+    konvaConfig: {
+      stage: {
+        width: 800,
+        height: 450,
+      },
+    },
   }),
 };
 </script>
