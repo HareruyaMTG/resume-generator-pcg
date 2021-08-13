@@ -4,6 +4,9 @@
       <konva-layer>
         <konva-image :config="{ image: background }" />
         <konva-text :config="playerNameConfig" />
+        <konva-text :config="favoriteColorConfig" />
+        <konva-text :config="activityAreaConfig" />
+        <konva-text :config="mtgHistoryConfig" />
       </konva-layer>
     </konva-stage>
     <v-form>
@@ -93,6 +96,24 @@ export default {
       const text = this.formInput.playerName;
       const x = 190;
       const y = 97;
+      return { ...this.fontSetting, text, x, y };
+    },
+    favoriteColorConfig() {
+      const text = this.formInput.favoriteColor;
+      const x = 190;
+      const y = 170;
+      return { ...this.fontSetting, text, x, y };
+    },
+    activityAreaConfig() {
+      const text = this.formInput.activityArea;
+      const x = 500;
+      const y = 97;
+      return { ...this.fontSetting, text, x, y };
+    },
+    mtgHistoryConfig() {
+      const text = this.formInput.mtgHistory;
+      const x = 500;
+      const y = 170;
       return { ...this.fontSetting, text, x, y };
     },
   },
