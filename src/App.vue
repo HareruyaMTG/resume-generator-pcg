@@ -28,6 +28,14 @@
     </konva-stage>
     <v-form>
       <v-text-field label="プレイヤーネーム" v-model="formInput.playerName" />
+      <v-radio-group label="性別" v-model="formInput.gender" row>
+        <v-radio
+          v-for="(item, index) in genderOptions"
+          :key="index"
+          :label="item"
+          :value="item"
+        />
+      </v-radio-group>
       <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
       <v-text-field label="活動地域" v-model="formInput.activityArea" />
       <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
@@ -45,7 +53,7 @@
         multiple
         chips
       />
-      <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
+      <v-radio-group label="カテゴリ" v-model="formInput.playerCategory" row>
         <v-radio
           v-for="(item, index) in playerCategoryOptions"
           :key="index"
@@ -67,6 +75,7 @@ export default {
   data: () => ({
     formInput: {
       playerName: "",
+      gender: "",
       favoriteColor: "",
       activityArea: "",
       mtgHistory: "",
@@ -77,6 +86,7 @@ export default {
       favoriteDeck: "",
       freeSpace: "",
     },
+    genderOptions: ["男性", "女性", "非公開"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
