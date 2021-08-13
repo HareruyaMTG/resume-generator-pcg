@@ -33,6 +33,12 @@
     </konva-stage>
     <vue-cropper />
     <v-form>
+      <v-file-input
+        label="アイコン"
+        v-model="uploadedFile"
+        accept="image/*"
+        @change="uploadIcon"
+      />
       <v-text-field label="プレイヤーネーム" v-model="formInput.playerName" />
       <v-radio-group label="性別" v-model="formInput.gender" row>
         <v-radio
@@ -83,7 +89,9 @@ export default {
   components: { VueCropper },
   data: () => ({
     imgSrc: null,
+    uploadedFile: null,
     formInput: {
+      playerIcon: null,
       playerName: "",
       gender: "非公開",
       favoriteColor: "",
@@ -222,6 +230,11 @@ export default {
       const stage = this.$refs.stage;
       stage.getNode().draw();
       this.imgSrc = stage.getStage().toDataURL();
+    },
+    uploadIcon() {
+      const icon = new window.Image();
+      icon.src = URL.createObjectURL(this.uploadedFile);
+      this.formInput.playerIcon = icon;
     },
   },
   mounted() {
