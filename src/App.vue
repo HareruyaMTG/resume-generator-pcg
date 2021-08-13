@@ -4,6 +4,10 @@
       <konva-layer>
         <konva-image :config="{ image: background }" />
         <konva-text :config="playerNameConfig" />
+        <konva-image
+          v-if="formInput.gender !== '非公開'"
+          :config="genderConfig"
+        />
         <konva-text :config="favoriteColorConfig" />
         <konva-text :config="activityAreaConfig" />
         <konva-text :config="mtgHistoryConfig" />
@@ -75,7 +79,7 @@ export default {
   data: () => ({
     formInput: {
       playerName: "",
-      gender: "",
+      gender: "非公開",
       favoriteColor: "",
       activityArea: "",
       mtgHistory: "",
@@ -131,6 +135,13 @@ export default {
       const x = 190;
       const y = 97;
       return { ...this.fontSetting, text, x, y };
+    },
+    genderConfig() {
+      const setting = { ...this.checkSetting, x: 320, y: 75 };
+      if (this.formInput.gender === "女性") {
+        setting.x = 367;
+      }
+      return setting;
     },
     favoriteColorConfig() {
       const text = this.formInput.favoriteColor;
