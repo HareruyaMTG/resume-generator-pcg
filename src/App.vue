@@ -4,9 +4,27 @@
       <konva-layer>
         <konva-image :config="{ image: background }" />
         <konva-text :config="playerNameConfig" />
+        <konva-image
+          v-if="formInput.gender !== '非公開'"
+          :config="genderConfig"
+        />
         <konva-text :config="favoriteColorConfig" />
         <konva-text :config="activityAreaConfig" />
         <konva-text :config="mtgHistoryConfig" />
+        <konva-image
+          v-for="(item, index) in noticeConfig"
+          :key="index"
+          :config="item"
+        />
+        <konva-image
+          v-for="(item, index) in playingFormatConfig"
+          :key="index"
+          :config="item"
+        />
+        <konva-image
+          v-if="formInput.playerCategory"
+          :config="playerCategoryConfig"
+        />
         <konva-text :config="favoriteCardConfig" />
         <konva-text :config="favoriteDeckConfig" />
         <konva-text :config="freeSpaceConfig" />
@@ -14,6 +32,14 @@
     </konva-stage>
     <v-form>
       <v-text-field label="プレイヤーネーム" v-model="formInput.playerName" />
+      <v-radio-group label="性別" v-model="formInput.gender" row>
+        <v-radio
+          v-for="(item, index) in genderOptions"
+          :key="index"
+          :label="item"
+          :value="item"
+        />
+      </v-radio-group>
       <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
       <v-text-field label="活動地域" v-model="formInput.activityArea" />
       <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
@@ -31,13 +57,13 @@
         multiple
         chips
       />
-      <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
-        <v-radio label="初心者" value="初心者" />
+      <v-radio-group label="カテゴリ" v-model="formInput.playerCategory" row>
         <v-radio
-          label="カジュアル・エンジョイ"
-          value="カジュアル・エンジョイ"
+          v-for="(item, index) in playerCategoryOptions"
+          :key="index"
+          :label="item"
+          :value="item"
         />
-        <v-radio label="ガチ・競技" value="ガチ・競技" />
       </v-radio-group>
       <v-textarea label="好きなカード" v-model="formInput.favoriteCard" />
       <v-textarea label="好きなデッキ" v-model="formInput.favoriteDeck" />
@@ -53,6 +79,7 @@ export default {
   data: () => ({
     formInput: {
       playerName: "",
+      gender: "非公開",
       favoriteColor: "",
       activityArea: "",
       mtgHistory: "",
@@ -63,6 +90,7 @@ export default {
       favoriteDeck: "",
       freeSpace: "",
     },
+    genderOptions: ["男性", "女性", "非公開"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
@@ -84,6 +112,7 @@ export default {
       "統率者",
       "その他",
     ],
+    playerCategoryOptions: ["初心者", "カジュアル・エンジョイ", "ガチ・競技"],
     stageConfig: {
       width: 800,
       height: 450,
@@ -93,6 +122,11 @@ export default {
       fontFamily: "Yusei Magic",
       wrap: "char",
     },
+    checkSetting: {
+      image: null,
+      width: 16,
+      height: 16,
+    },
     background: null,
   }),
   computed: {
@@ -101,6 +135,13 @@ export default {
       const x = 190;
       const y = 97;
       return { ...this.fontSetting, text, x, y };
+    },
+    genderConfig() {
+      const setting = { ...this.checkSetting, x: 320, y: 75 };
+      if (this.formInput.gender === "女性") {
+        setting.x = 367;
+      }
+      return setting;
     },
     favoriteColorConfig() {
       const text = this.formInput.favoriteColor;
@@ -119,6 +160,31 @@ export default {
       const x = 500;
       const y = 170;
       return { ...this.fontSetting, text, x, y };
+    },
+    noticeConfig() {
+      const checkArray = [];
+      const x = 24;
+      this.formInput.notice.forEach((item) => {
+        const index = this.noticeOptions.indexOf(item);
+        checkArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
+      });
+      return checkArray;
+    },
+    playingFormatConfig() {
+      const formatArray = [];
+      const x = 191;
+      this.formInput.playingFormat.forEach((item) => {
+        const index = this.playingFormatOptions.indexOf(item);
+        formatArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
+      });
+      return formatArray;
+    },
+    playerCategoryConfig() {
+      const x = 323;
+      const index = this.playerCategoryOptions.indexOf(
+        this.formInput.playerCategory
+      );
+      return { ...this.checkSetting, x, y: 246 + 19.4 * index };
     },
     favoriteCardConfig() {
       const text = this.formInput.favoriteCard;
@@ -167,6 +233,12 @@ export default {
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     background.onload = () => {
       this.background = background;
+    };
+
+    const check = new window.Image();
+    check.src = require("@/assets/check.svg");
+    check.onload = () => {
+      this.checkSetting.image = check;
     };
   },
 };
