@@ -3,6 +3,7 @@
     <konva-stage :config="stageConfig">
       <konva-layer>
         <konva-image :config="{ image: background }" />
+        <konva-text :config="playerNameConfig" />
       </konva-layer>
     </konva-stage>
     <v-form>
@@ -79,8 +80,19 @@ export default {
       width: 800,
       height: 450,
     },
+    fontSetting: {
+      fontSize: 24,
+    },
     background: null,
   }),
+  computed: {
+    playerNameConfig() {
+      const text = this.playerName;
+      const x = 190;
+      const y = 97;
+      return { ...this.fontSetting, text, x, y };
+    },
+  },
   created() {
     const background = new window.Image();
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
