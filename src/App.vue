@@ -82,6 +82,7 @@ export default {
     },
     fontSetting: {
       fontSize: 24,
+      fontFamily: "Yusei Magic",
     },
     background: null,
   }),
@@ -102,3 +103,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
+</style>
