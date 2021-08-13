@@ -31,7 +31,13 @@
         <konva-text :config="freeSpaceConfig" />
       </konva-layer>
     </konva-stage>
-    <vue-cropper />
+    <div v-if="this.formInput.playerIcon !== ''">
+      <vue-cropper
+        ref="cropper"
+        :aspect-ratio="1 / 1"
+        :src="formInput.playerIcon"
+      />
+    </div>
     <v-form>
       <v-file-input
         label="アイコン"
@@ -88,10 +94,10 @@ export default {
   name: "App",
   components: { VueCropper },
   data: () => ({
-    imgSrc: null,
+    imgSrc: "",
     uploadedFile: null,
     formInput: {
-      playerIcon: null,
+      playerIcon: "",
       playerName: "",
       gender: "非公開",
       favoriteColor: "",
@@ -232,9 +238,11 @@ export default {
       this.imgSrc = stage.getStage().toDataURL();
     },
     uploadIcon() {
-      const icon = new window.Image();
-      icon.src = URL.createObjectURL(this.uploadedFile);
-      this.formInput.playerIcon = icon;
+      // const icon = new window.Image();
+      // icon.src = URL.createObjectURL(this.uploadedFile);
+      // this.formInput.playerIcon = icon;
+
+      this.formInput.playerIcon = URL.createObjectURL(this.uploadedFile);
     },
   },
   mounted() {
