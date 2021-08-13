@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <img :src="imgSrc" alt="MTG履歴書" />
     <konva-stage :config="stageConfig" ref="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
@@ -77,6 +78,7 @@ export default {
   name: "App",
 
   data: () => ({
+    imgSrc: null,
     formInput: {
       playerName: "",
       gender: "非公開",
@@ -213,10 +215,14 @@ export default {
   },
   methods: {
     updateCanvas() {
-      this.$refs.stage.getNode().draw();
+      const stage = this.$refs.stage;
+      stage.getNode().draw();
+      this.imgSrc = stage.getStage().toDataURL();
     },
   },
   mounted() {
+    this.updateCanvas();
+
     this.$watch(
       "formInput",
       function () {
