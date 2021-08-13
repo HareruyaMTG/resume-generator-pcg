@@ -17,6 +17,10 @@
           :key="index"
           :config="item"
         />
+        <konva-image
+          v-if="formInput.playerCategory"
+          :config="playerCategoryConfig"
+        />
         <konva-text :config="favoriteCardConfig" />
         <konva-text :config="favoriteDeckConfig" />
         <konva-text :config="freeSpaceConfig" />
@@ -153,6 +157,13 @@ export default {
         formatArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
       });
       return formatArray;
+    },
+    playerCategoryConfig() {
+      const x = 323;
+      const index = this.playerCategoryOptions.indexOf(
+        this.formInput.playerCategory
+      );
+      return { ...this.checkSetting, x, y: 246 + 19.4 * index };
     },
     favoriteCardConfig() {
       const text = this.formInput.favoriteCard;
