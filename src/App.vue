@@ -42,12 +42,12 @@
         chips
       />
       <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
-        <v-radio label="初心者" value="初心者" />
         <v-radio
-          label="カジュアル・エンジョイ"
-          value="カジュアル・エンジョイ"
+          v-for="(item, index) in playerCategoryOptions"
+          :key="index"
+          :label="item"
+          :value="item"
         />
-        <v-radio label="ガチ・競技" value="ガチ・競技" />
       </v-radio-group>
       <v-textarea label="好きなカード" v-model="formInput.favoriteCard" />
       <v-textarea label="好きなデッキ" v-model="formInput.favoriteDeck" />
@@ -94,6 +94,7 @@ export default {
       "統率者",
       "その他",
     ],
+    playerCategoryOptions: ["初心者", "カジュアル・エンジョイ", "ガチ・競技"],
     stageConfig: {
       width: 800,
       height: 450,
