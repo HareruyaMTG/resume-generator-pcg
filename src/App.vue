@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <img :src="imgSrc" alt="MTG履歴書" />
+    <img :src="imgSrc" alt="MTG履歴書" width="800" height="450" />
     <konva-stage :config="stageConfig" ref="stage" class="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
