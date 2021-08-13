@@ -12,6 +12,11 @@
           :key="index"
           :config="item"
         />
+        <konva-image
+          v-for="(item, index) in playingFormatConfig"
+          :key="index"
+          :config="item"
+        />
         <konva-text :config="favoriteCardConfig" />
         <konva-text :config="favoriteDeckConfig" />
         <konva-text :config="freeSpaceConfig" />
@@ -138,6 +143,15 @@ export default {
         checkArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
       });
       return checkArray;
+    },
+    playingFormatConfig() {
+      const formatArray = [];
+      const x = 191;
+      this.formInput.playingFormat.forEach((item) => {
+        const index = this.playingFormatOptions.indexOf(item);
+        formatArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
+      });
+      return formatArray;
     },
     favoriteCardConfig() {
       const text = this.formInput.favoriteCard;
