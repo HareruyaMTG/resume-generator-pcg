@@ -7,6 +7,9 @@
         <konva-text :config="favoriteColorConfig" />
         <konva-text :config="activityAreaConfig" />
         <konva-text :config="mtgHistoryConfig" />
+        <konva-text :config="favoriteCardConfig" />
+        <konva-text :config="favoriteDeckConfig" />
+        <konva-text :config="freeSpaceConfig" />
       </konva-layer>
     </konva-stage>
     <v-form>
@@ -88,6 +91,7 @@ export default {
     fontSetting: {
       fontSize: 24,
       fontFamily: "Yusei Magic",
+      wrap: "char",
     },
     background: null,
   }),
@@ -115,6 +119,30 @@ export default {
       const x = 500;
       const y = 170;
       return { ...this.fontSetting, text, x, y };
+    },
+    favoriteCardConfig() {
+      const text = this.formInput.favoriteCard;
+      const x = 324;
+      const y = 350;
+      const width = 150;
+      const height = 75;
+      return { ...this.fontSetting, text, x, y, width, height };
+    },
+    favoriteDeckConfig() {
+      const text = this.formInput.favoriteDeck;
+      const x = 500;
+      const y = 243;
+      const width = 280;
+      const height = 50;
+      return { ...this.fontSetting, text, x, y, width, height };
+    },
+    freeSpaceConfig() {
+      const text = this.formInput.freeSpace;
+      const x = 500;
+      const y = 350;
+      const width = 280;
+      const height = 75;
+      return { ...this.fontSetting, text, x, y, width, height };
     },
   },
   methods: {
