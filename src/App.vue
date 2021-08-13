@@ -117,12 +117,12 @@ export default {
       width: 800,
       height: 450,
     },
-    fontSetting: {
+    fontConfig: {
       fontSize: 24,
       fontFamily: "Yusei Magic",
       wrap: "char",
     },
-    checkSetting: {
+    checkConfig: {
       image: null,
       width: 16,
       height: 16,
@@ -134,39 +134,39 @@ export default {
       const text = this.formInput.playerName;
       const x = 190;
       const y = 97;
-      return { ...this.fontSetting, text, x, y };
+      return { ...this.fontConfig, text, x, y };
     },
     genderConfig() {
-      const setting = { ...this.checkSetting, x: 320, y: 75 };
+      const config = { ...this.checkConfig, x: 320, y: 75 };
       if (this.formInput.gender === "女性") {
-        setting.x = 367;
+        config.x = 367;
       }
-      return setting;
+      return config;
     },
     favoriteColorConfig() {
       const text = this.formInput.favoriteColor;
       const x = 190;
       const y = 170;
-      return { ...this.fontSetting, text, x, y };
+      return { ...this.fontConfig, text, x, y };
     },
     activityAreaConfig() {
       const text = this.formInput.activityArea;
       const x = 500;
       const y = 97;
-      return { ...this.fontSetting, text, x, y };
+      return { ...this.fontConfig, text, x, y };
     },
     mtgHistoryConfig() {
       const text = this.formInput.mtgHistory;
       const x = 500;
       const y = 170;
-      return { ...this.fontSetting, text, x, y };
+      return { ...this.fontConfig, text, x, y };
     },
     noticeConfig() {
       const checkArray = [];
       const x = 24;
       this.formInput.notice.forEach((item) => {
         const index = this.noticeOptions.indexOf(item);
-        checkArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
+        checkArray.push({ ...this.checkConfig, x, y: 250 + 19.4 * index });
       });
       return checkArray;
     },
@@ -175,7 +175,7 @@ export default {
       const x = 191;
       this.formInput.playingFormat.forEach((item) => {
         const index = this.playingFormatOptions.indexOf(item);
-        formatArray.push({ ...this.checkSetting, x, y: 250 + 19.4 * index });
+        formatArray.push({ ...this.checkConfig, x, y: 250 + 19.4 * index });
       });
       return formatArray;
     },
@@ -184,7 +184,7 @@ export default {
       const index = this.playerCategoryOptions.indexOf(
         this.formInput.playerCategory
       );
-      return { ...this.checkSetting, x, y: 246 + 19.4 * index };
+      return { ...this.checkConfig, x, y: 246 + 19.4 * index };
     },
     favoriteCardConfig() {
       const text = this.formInput.favoriteCard;
@@ -192,7 +192,7 @@ export default {
       const y = 350;
       const width = 150;
       const height = 75;
-      return { ...this.fontSetting, text, x, y, width, height };
+      return { ...this.fontConfig, text, x, y, width, height };
     },
     favoriteDeckConfig() {
       const text = this.formInput.favoriteDeck;
@@ -200,7 +200,7 @@ export default {
       const y = 243;
       const width = 280;
       const height = 50;
-      return { ...this.fontSetting, text, x, y, width, height };
+      return { ...this.fontConfig, text, x, y, width, height };
     },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
@@ -208,7 +208,7 @@ export default {
       const y = 350;
       const width = 280;
       const height = 75;
-      return { ...this.fontSetting, text, x, y, width, height };
+      return { ...this.fontConfig, text, x, y, width, height };
     },
   },
   methods: {
@@ -238,7 +238,7 @@ export default {
     const check = new window.Image();
     check.src = require("@/assets/check.svg");
     check.onload = () => {
-      this.checkSetting.image = check;
+      this.checkConfig.image = check;
     };
   },
 };
