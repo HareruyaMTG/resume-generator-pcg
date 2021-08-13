@@ -31,6 +31,7 @@
         <konva-text :config="freeSpaceConfig" />
       </konva-layer>
     </konva-stage>
+    <vue-cropper />
     <v-form>
       <v-text-field label="プレイヤーネーム" v-model="formInput.playerName" />
       <v-radio-group label="性別" v-model="formInput.gender" row>
@@ -74,9 +75,12 @@
 </template>
 
 <script>
+import VueCropper from "vue-cropperjs";
+import "cropperjs/dist/cropper.css";
+
 export default {
   name: "App",
-
+  components: { VueCropper },
   data: () => ({
     imgSrc: null,
     formInput: {
