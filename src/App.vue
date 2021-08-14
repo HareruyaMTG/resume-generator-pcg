@@ -4,6 +4,7 @@
     <konva-stage :config="stageConfig" ref="stage" class="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
+        <konva-image :config="playerIconConfig" />
         <konva-text :config="playerNameConfig" />
         <konva-image
           v-if="formInput.gender !== '非公開'"
@@ -36,6 +37,12 @@
         ref="cropper"
         :aspect-ratio="1 / 1"
         :src="formInput.playerIcon"
+        :viewMode="1"
+        :guides="false"
+        :background="false"
+        :ready="updateIcon"
+        :cropend="updateIcon"
+        :zoom="updateIcon"
       />
     </div>
     <v-form>
@@ -96,6 +103,7 @@ export default {
   data: () => ({
     imgSrc: "",
     uploadedFile: null,
+    croppedIcon: null,
     formInput: {
       playerIcon: "",
       playerName: "",
@@ -150,6 +158,16 @@ export default {
     background: null,
   }),
   computed: {
+    playerIconConfig() {
+      const x = 13;
+      const y = 64;
+      const image = this.croppedIcon;
+      return {
+        image,
+        x,
+        y,
+      };
+    },
     playerNameConfig() {
       const text = this.formInput.playerName;
       const x = 190;
@@ -238,11 +256,20 @@ export default {
       this.imgSrc = stage.getStage().toDataURL();
     },
     uploadIcon() {
-      // const icon = new window.Image();
-      // icon.src = URL.createObjectURL(this.uploadedFile);
-      // this.formInput.playerIcon = icon;
-
       this.formInput.playerIcon = URL.createObjectURL(this.uploadedFile);
+      this.$refs.cropper.replace(this.formInput.playerIcon);
+    },
+    updateIcon() {
+      const icon = new window.Image();
+      const src = this.$refs.cropper.getCroppedCanvas().toDataURL();
+      icon.src = src;
+
+      this.croppedIcon = icon;
+
+      const self = this;
+      setTimeout(function () {
+        self.updateCanvas();
+      }, 100);
     },
   },
   mounted() {
@@ -266,6 +293,7 @@ export default {
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     background.onload = () => {
       this.background = background;
+      this.formInput.playerIcon = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     };
 
     const check = new window.Image();
