@@ -161,11 +161,14 @@ export default {
     playerIconConfig() {
       const x = 13;
       const y = 64;
+      const size = 136;
       const image = this.croppedIcon;
       return {
         image,
         x,
         y,
+        width: size,
+        height: size,
       };
     },
     playerNameConfig() {
