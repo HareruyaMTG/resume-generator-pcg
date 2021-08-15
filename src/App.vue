@@ -33,7 +33,7 @@
       </konva-layer>
     </konva-stage>
     <v-dialog v-model="cropperModal">
-      <v-card>
+      <v-card height="90vh">
         <v-card-title>アイコンの切り抜き</v-card-title>
         <vue-cropper
           ref="cropper"
@@ -266,7 +266,9 @@ export default {
     uploadIcon() {
       this.formInput.playerIcon = URL.createObjectURL(this.uploadedFile);
       this.cropperModal = true;
-      this.$refs.cropper.replace(this.formInput.playerIcon);
+      if (this.croppedIcon) {
+        this.$refs.cropper.replace(this.formInput.playerIcon);
+      }
     },
     updateIcon() {
       const icon = new window.Image();
@@ -304,7 +306,6 @@ export default {
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     background.onload = () => {
       this.background = background;
-      this.formInput.playerIcon = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     };
 
     const check = new window.Image();
