@@ -32,19 +32,23 @@
         <konva-text :config="freeSpaceConfig" />
       </konva-layer>
     </konva-stage>
-    <div v-if="this.formInput.playerIcon !== ''">
-      <vue-cropper
-        ref="cropper"
-        :aspect-ratio="1 / 1"
-        :src="formInput.playerIcon"
-        :viewMode="1"
-        :guides="false"
-        :background="false"
-        :ready="updateIcon"
-        :cropend="updateIcon"
-        :zoom="updateIcon"
-      />
-    </div>
+    <v-dialog v-model="cropperModal">
+      <v-card>
+        <v-card-title>アイコンの切り抜き</v-card-title>
+        <vue-cropper
+          ref="cropper"
+          :aspect-ratio="1 / 1"
+          :src="formInput.playerIcon"
+          :viewMode="1"
+          :guides="false"
+          :background="false"
+        />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" @click="updateIcon">確定する</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-form>
       <v-file-input
         label="アイコン"
@@ -104,6 +108,7 @@ export default {
     imgSrc: "",
     uploadedFile: null,
     croppedIcon: null,
+    cropperModal: false,
     formInput: {
       playerIcon: "",
       playerName: "",
@@ -260,6 +265,7 @@ export default {
     },
     uploadIcon() {
       this.formInput.playerIcon = URL.createObjectURL(this.uploadedFile);
+      this.cropperModal = true;
       this.$refs.cropper.replace(this.formInput.playerIcon);
     },
     updateIcon() {
@@ -273,6 +279,8 @@ export default {
       setTimeout(function () {
         self.updateCanvas();
       }, 100);
+
+      this.cropperModal = false;
     },
   },
   mounted() {
