@@ -44,11 +44,18 @@
             :viewMode="1"
             :guides="false"
             :background="false"
-            :autoCropArea="0.95"
+            :autoCropArea="1"
             dragMode="move"
             :cropBoxMovable="false"
             :cropBoxResizable="false"
             @ready="initCropper"
+          />
+          <v-slider
+            v-model="cropperZoom"
+            :min="10"
+            append-icon="mdi-magnify-plus-outline"
+            prepend-icon="mdi-magnify-minus-outline"
+            @change="cropperZoomTo"
           />
         </v-card-text>
         <v-card-actions>
@@ -276,13 +283,15 @@ export default {
       this.formInput.playerIcon = URL.createObjectURL(this.uploadedFile);
       this.cropperModal = true;
       if (this.croppedIcon) {
-        this.$refs.cropper.replace(this.formInput.playerIcon);
+        this.initCropper();
       }
     },
     initCropper() {
-      const cropper = this.$refs.cropper;
-      cropper.setData({ width: 272, height: 272 });
-      cropper.replace(this.formInput.playerIcon);
+      this.cropperZoom = 0;
+      this.$refs.cropper.replace(this.formInput.playerIcon);
+    },
+    cropperZoomTo() {
+      this.$refs.cropper.zoomTo(this.cropperZoom / 100);
     },
     updateIcon() {
       const icon = new window.Image();
