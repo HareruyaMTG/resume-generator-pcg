@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <konva-stage :config="stageConfig" ref="stage">
+    <img :src="imgSrc" alt="MTG履歴書" width="800" height="450" />
+    <konva-stage :config="stageConfig" ref="stage" class="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
         <konva-text :config="playerNameConfig" />
@@ -77,6 +78,7 @@ export default {
   name: "App",
 
   data: () => ({
+    imgSrc: null,
     formInput: {
       playerName: "",
       gender: "非公開",
@@ -213,7 +215,9 @@ export default {
   },
   methods: {
     updateCanvas() {
-      this.$refs.stage.getNode().draw();
+      const stage = this.$refs.stage;
+      stage.getNode().draw();
+      this.imgSrc = stage.getStage().toDataURL();
     },
   },
   mounted() {
@@ -227,6 +231,10 @@ export default {
       },
       { deep: true }
     );
+
+    this.$watch("background", function () {
+      this.updateCanvas();
+    });
   },
   created() {
     const background = new window.Image();
@@ -246,4 +254,8 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
+
+.stage {
+  display: none;
+}
 </style>
