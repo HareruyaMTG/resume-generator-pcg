@@ -1,6 +1,12 @@
 <template>
   <v-app>
-    <img :src="imgSrc" alt="MTG履歴書" width="800" height="450" />
+    <img
+      :src="imgSrc"
+      alt="MTG履歴書"
+      width="800"
+      height="450"
+      class="preview"
+    />
     <konva-stage :config="stageConfig" ref="stage" class="stage">
       <konva-layer>
         <konva-image :config="{ image: background }" />
@@ -343,6 +349,11 @@ export default {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
 
+.preview {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
 .stage {
   display: none;
 }
