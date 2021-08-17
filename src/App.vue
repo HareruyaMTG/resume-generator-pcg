@@ -1,43 +1,99 @@
 <template>
   <v-app>
-    <img
-      :src="imgSrc"
-      alt="MTG履歴書"
-      width="800"
-      height="450"
-      class="preview"
-    />
-    <konva-stage :config="stageConfig" ref="stage" class="stage">
-      <konva-layer>
-        <konva-image :config="{ image: background }" />
-        <konva-image :config="playerIconConfig" />
-        <konva-text :config="playerNameConfig" />
-        <konva-image
-          v-if="formInput.gender !== '非公開'"
-          :config="genderConfig"
+    <v-main>
+      <v-container>
+        <img
+          :src="imgSrc"
+          alt="MTG履歴書"
+          width="800"
+          height="450"
+          class="preview"
         />
-        <konva-text :config="favoriteColorConfig" />
-        <konva-text :config="activityAreaConfig" />
-        <konva-text :config="mtgHistoryConfig" />
-        <konva-image
-          v-for="(item, index) in noticeConfig"
-          :key="`notice-${index}`"
-          :config="item"
-        />
-        <konva-image
-          v-for="(item, index) in playingFormatConfig"
-          :key="`format-${index}`"
-          :config="item"
-        />
-        <konva-image
-          v-if="formInput.playerCategory"
-          :config="playerCategoryConfig"
-        />
-        <konva-text :config="favoriteCardConfig" />
-        <konva-text :config="favoriteDeckConfig" />
-        <konva-text :config="freeSpaceConfig" />
-      </konva-layer>
-    </konva-stage>
+        <konva-stage :config="stageConfig" ref="stage" class="stage">
+          <konva-layer>
+            <konva-image :config="{ image: background }" />
+            <konva-image :config="playerIconConfig" />
+            <konva-text :config="playerNameConfig" />
+            <konva-image
+              v-if="formInput.gender !== '非公開'"
+              :config="genderConfig"
+            />
+            <konva-text :config="favoriteColorConfig" />
+            <konva-text :config="activityAreaConfig" />
+            <konva-text :config="mtgHistoryConfig" />
+            <konva-image
+              v-for="(item, index) in noticeConfig"
+              :key="`notice-${index}`"
+              :config="item"
+            />
+            <konva-image
+              v-for="(item, index) in playingFormatConfig"
+              :key="`format-${index}`"
+              :config="item"
+            />
+            <konva-image
+              v-if="formInput.playerCategory"
+              :config="playerCategoryConfig"
+            />
+            <konva-text :config="favoriteCardConfig" />
+            <konva-text :config="favoriteDeckConfig" />
+            <konva-text :config="freeSpaceConfig" />
+          </konva-layer>
+        </konva-stage>
+        <v-form>
+          <v-file-input
+            label="アイコン"
+            v-model="uploadedFile"
+            accept="image/*"
+            @change="uploadIcon"
+          />
+          <v-text-field
+            label="プレイヤーネーム"
+            v-model="formInput.playerName"
+          />
+          <v-radio-group label="性別" v-model="formInput.gender" row>
+            <v-radio
+              v-for="(item, index) in genderOptions"
+              :key="`genderRadio-${index}`"
+              :label="item"
+              :value="item"
+            />
+          </v-radio-group>
+          <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
+          <v-text-field label="活動地域" v-model="formInput.activityArea" />
+          <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
+          <v-select
+            label="要望&お知らせ"
+            v-model="formInput.notice"
+            :items="noticeOptions"
+            multiple
+            chips
+          />
+          <v-select
+            label="フォーマット"
+            v-model="formInput.playingFormat"
+            :items="playingFormatOptions"
+            multiple
+            chips
+          />
+          <v-radio-group
+            label="カテゴリ"
+            v-model="formInput.playerCategory"
+            row
+          >
+            <v-radio
+              v-for="(item, index) in playerCategoryOptions"
+              :key="`categoryRadio-${index}`"
+              :label="item"
+              :value="item"
+            />
+          </v-radio-group>
+          <v-textarea label="好きなカード" v-model="formInput.favoriteCard" />
+          <v-textarea label="好きなデッキ" v-model="formInput.favoriteDeck" />
+          <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
+        </v-form>
+      </v-container>
+    </v-main>
     <v-dialog v-model="cropperModal" max-width="50vh">
       <v-card>
         <v-card-title>アイコンの切り抜き</v-card-title>
@@ -70,51 +126,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-form>
-      <v-file-input
-        label="アイコン"
-        v-model="uploadedFile"
-        accept="image/*"
-        @change="uploadIcon"
-      />
-      <v-text-field label="プレイヤーネーム" v-model="formInput.playerName" />
-      <v-radio-group label="性別" v-model="formInput.gender" row>
-        <v-radio
-          v-for="(item, index) in genderOptions"
-          :key="`genderRadio-${index}`"
-          :label="item"
-          :value="item"
-        />
-      </v-radio-group>
-      <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
-      <v-text-field label="活動地域" v-model="formInput.activityArea" />
-      <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
-      <v-select
-        label="要望&お知らせ"
-        v-model="formInput.notice"
-        :items="noticeOptions"
-        multiple
-        chips
-      />
-      <v-select
-        label="フォーマット"
-        v-model="formInput.playingFormat"
-        :items="playingFormatOptions"
-        multiple
-        chips
-      />
-      <v-radio-group label="カテゴリ" v-model="formInput.playerCategory" row>
-        <v-radio
-          v-for="(item, index) in playerCategoryOptions"
-          :key="`categoryRadio-${index}`"
-          :label="item"
-          :value="item"
-        />
-      </v-radio-group>
-      <v-textarea label="好きなカード" v-model="formInput.favoriteCard" />
-      <v-textarea label="好きなデッキ" v-model="formInput.favoriteDeck" />
-      <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
-    </v-form>
   </v-app>
 </template>
 
