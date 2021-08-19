@@ -32,19 +32,38 @@
         <konva-text :config="freeSpaceConfig" />
       </konva-layer>
     </konva-stage>
-    <div v-if="this.formInput.playerIcon !== ''">
-      <vue-cropper
-        ref="cropper"
-        :aspect-ratio="1 / 1"
-        :src="formInput.playerIcon"
-        :viewMode="1"
-        :guides="false"
-        :background="false"
-        :ready="updateIcon"
-        :cropend="updateIcon"
-        :zoom="updateIcon"
-      />
-    </div>
+    <v-dialog v-model="cropperModal" max-width="50vh">
+      <v-card>
+        <v-card-title>アイコンの切り抜き</v-card-title>
+        <v-card-text>
+          <vue-cropper
+            ref="cropper"
+            class="cropper"
+            :aspect-ratio="1 / 1"
+            :src="formInput.playerIcon"
+            :viewMode="1"
+            :guides="false"
+            :background="false"
+            :autoCropArea="1"
+            dragMode="move"
+            :cropBoxMovable="false"
+            :cropBoxResizable="false"
+            @ready="initCropper"
+          />
+          <v-slider
+            v-model="cropperZoom"
+            :min="10"
+            append-icon="mdi-magnify-plus-outline"
+            prepend-icon="mdi-magnify-minus-outline"
+            @change="cropperZoomTo"
+          />
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn color="primary" @click="updateIcon">確定する</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-form>
       <v-file-input
         label="アイコン"
@@ -104,6 +123,8 @@ export default {
     imgSrc: "",
     uploadedFile: null,
     croppedIcon: null,
+    cropperModal: false,
+    cropperZoom: 0,
     formInput: {
       playerIcon: "",
       playerName: "",
@@ -260,7 +281,17 @@ export default {
     },
     uploadIcon() {
       this.formInput.playerIcon = URL.createObjectURL(this.uploadedFile);
+      this.cropperModal = true;
+      if (this.croppedIcon) {
+        this.initCropper();
+      }
+    },
+    initCropper() {
+      this.cropperZoom = 0;
       this.$refs.cropper.replace(this.formInput.playerIcon);
+    },
+    cropperZoomTo() {
+      this.$refs.cropper.zoomTo(this.cropperZoom / 100);
     },
     updateIcon() {
       const icon = new window.Image();
@@ -273,6 +304,8 @@ export default {
       setTimeout(function () {
         self.updateCanvas();
       }, 100);
+
+      this.cropperModal = false;
     },
   },
   mounted() {
@@ -296,7 +329,6 @@ export default {
     background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     background.onload = () => {
       this.background = background;
-      this.formInput.playerIcon = require("@/assets/twitter_2107_MTGRirekisho.jpg");
     };
 
     const check = new window.Image();
@@ -313,5 +345,9 @@ export default {
 
 .stage {
   display: none;
+}
+.cropper {
+  max-height: 50vh;
+  position: relative;
 }
 </style>
