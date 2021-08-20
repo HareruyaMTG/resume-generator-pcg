@@ -188,17 +188,22 @@ export default {
       fontFamily: "Yusei Magic",
       wrap: "char",
     },
-    checkConfig: {
-      image: null,
-      width: 16,
-      height: 16,
-    },
+    checkImage: null,
     background: null,
+    flame: null,
   }),
   computed: {
     isMd() {
       const bp = this.$vuetify.breakpoint.name;
       return bp === "md" || bp === "lg" || bp === "xl";
+    },
+    checkConfig() {
+      const size = 16;
+      return {
+        image: this.checkImage,
+        width: size,
+        height: size,
+      };
     },
     playerIconConfig() {
       const x = 13;
@@ -328,6 +333,13 @@ export default {
 
       this.cropperModal = false;
     },
+    mountImage(path, target) {
+      const image = new window.Image();
+      image.src = path;
+      image.onload = () => {
+        this[target] = image;
+      };
+    },
   },
   mounted() {
     this.$watch(
@@ -346,17 +358,11 @@ export default {
     });
   },
   created() {
-    const background = new window.Image();
-    background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
-    background.onload = () => {
-      this.background = background;
-    };
-
-    const check = new window.Image();
-    check.src = require("@/assets/check.svg");
-    check.onload = () => {
-      this.checkConfig.image = check;
-    };
+    this.mountImage(
+      require("@/assets/twitter_2107_MTGRirekisho.jpg"),
+      "background"
+    );
+    this.mountImage(require("@/assets/check.svg"), "checkImage");
   },
 };
 </script>
