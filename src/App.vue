@@ -12,7 +12,8 @@
           />
           <konva-stage :config="stageConfig" ref="stage" class="stage">
             <konva-layer>
-              <konva-image :config="{ image: background }" />
+              <konva-image :config="{ image: image.background }" />
+              <konva-image :config="{ image: image.flame }" />
               <konva-image :config="playerIconConfig" />
               <konva-text :config="playerNameConfig" />
               <konva-image
@@ -188,9 +189,11 @@ export default {
       fontFamily: "Yusei Magic",
       wrap: "char",
     },
-    checkImage: null,
-    background: null,
-    flame: null,
+    image: {
+      check: null,
+      background: null,
+      flame: null,
+    },
   }),
   computed: {
     isMd() {
@@ -200,7 +203,7 @@ export default {
     checkConfig() {
       const size = 16;
       return {
-        image: this.checkImage,
+        image: this.image.check,
         width: size,
         height: size,
       };
@@ -337,7 +340,7 @@ export default {
       const image = new window.Image();
       image.src = path;
       image.onload = () => {
-        this[target] = image;
+        this.image[target] = image;
       };
     },
   },
@@ -353,16 +356,24 @@ export default {
       { deep: true }
     );
 
-    this.$watch("background", function () {
-      this.updateCanvas();
-    });
+    this.$watch(
+      "image",
+      function () {
+        this.updateCanvas();
+      },
+      { deep: true }
+    );
   },
   created() {
     this.mountImage(
-      require("@/assets/twitter_2107_MTGRirekisho.jpg"),
+      require("@/assets/twitter_2107_MTGRirekisho-w.jpg"),
       "background"
     );
-    this.mountImage(require("@/assets/check.svg"), "checkImage");
+    this.mountImage(
+      require("@/assets/twitter_2107_MTGRirekishoFlame.png"),
+      "flame"
+    );
+    this.mountImage(require("@/assets/check.svg"), "check");
   },
 };
 </script>
