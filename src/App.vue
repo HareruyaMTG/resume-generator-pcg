@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app id="app">
     <v-main>
       <v-container :class="{ 'is-md': isMd }">
         <div class="preview-wrapper">
@@ -368,11 +368,20 @@ export default {
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
 
+#app {
+  background: #ddd;
+}
+
+.container {
+  justify-content: center;
+  background: #fff;
+  box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+}
 .container.is-md {
   display: flex;
   overflow-y: hidden;
   .preview-wrapper {
-    margin-right: 2rem;
+    margin-right: 1.5rem;
   }
   .form-wrapper {
     height: 97vh;
