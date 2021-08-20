@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <v-container>
+      <v-container :class="{ 'is-md': isMd }">
         <div class="preview-wrapper">
           <img
             :src="imgSrc"
@@ -200,6 +200,10 @@ export default {
     background: null,
   }),
   computed: {
+    isMd() {
+      const bp = this.$vuetify.breakpoint.name;
+      return bp === "md" || bp === "lg" || bp === "xl";
+    },
     playerIconConfig() {
       const x = 13;
       const y = 64;
@@ -361,20 +365,24 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
 
-.container {
+.container.is-md {
   display: flex;
   overflow-y: hidden;
+  .preview-wrapper {
+    margin-right: 2rem;
+  }
+  .form-wrapper {
+    height: 97vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-basis: 32rem;
+  }
 }
 .preview-wrapper {
-  margin-right: 2rem;
-}
-.form-wrapper {
-  height: 97vh;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  text-align: center;
 }
 
 .preview {
