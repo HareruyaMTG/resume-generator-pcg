@@ -54,7 +54,7 @@
               label="プレイヤーネーム"
               v-model="formInput.playerName"
             />
-            <v-radio-group label="性別" v-model="formInput.gender" row>
+            <v-radio-group label="性別" v-model="formInput.gender">
               <v-radio
                 v-for="(item, index) in genderOptions"
                 :key="`genderRadio-${index}`"
@@ -79,11 +79,7 @@
               multiple
               chips
             />
-            <v-radio-group
-              label="カテゴリ"
-              v-model="formInput.playerCategory"
-              row
-            >
+            <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
               <v-radio
                 v-for="(item, index) in playerCategoryOptions"
                 :key="`categoryRadio-${index}`"
