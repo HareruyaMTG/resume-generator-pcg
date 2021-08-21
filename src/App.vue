@@ -56,6 +56,13 @@
               item-value="value"
               @change="updateBackground"
             />
+            <v-select
+              label="フォント"
+              v-model="formInput.font"
+              :items="fontOptions"
+              item-text="text"
+              item-value="value"
+            />
             <v-file-input
               label="アイコン"
               v-model="uploadedFile"
@@ -162,6 +169,7 @@ export default {
     cropperZoom: 0,
     formInput: {
       background: "w",
+      font: "Yusei Magic",
       playerIcon: "",
       playerName: "",
       gender: "非公開",
@@ -179,6 +187,11 @@ export default {
       { text: "黒", value: "b" },
       { text: "赤", value: "r" },
       { text: "緑", value: "g" },
+    ],
+    fontOptions: [
+      { text: "油性マジック", value: "Yusei Magic" },
+      { text: "源ノ角ゴシック", value: "Noto Sans JP" },
+      { text: "源ノ明朝", value: "Noto Serif JP" },
     ],
     genderOptions: ["男性", "女性", "非公開"],
     playerCategoryOptions: ["初心者", "カジュアル・エンジョイ", "ガチ・競技"],
@@ -207,11 +220,6 @@ export default {
       width: 800,
       height: 450,
     },
-    fontConfig: {
-      fontSize: 24,
-      fontFamily: "Yusei Magic",
-      wrap: "char",
-    },
     image: {
       check: null,
       background: null,
@@ -222,6 +230,13 @@ export default {
     isMd() {
       const bp = this.$vuetify.breakpoint.name;
       return bp === "md" || bp === "lg" || bp === "xl";
+    },
+    fontConfig() {
+      return {
+        fontSize: 24,
+        fontFamily: this.formInput.font,
+        wrap: "char",
+      };
     },
     checkConfig() {
       return {
@@ -416,7 +431,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Noto+Serif+JP&family=Yusei+Magic&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&family=Noto+Serif+JP:wght@700&family=Yusei+Magic&display=swap");
 
 #app {
   background: #ddd;
