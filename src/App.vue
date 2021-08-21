@@ -40,6 +40,11 @@
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
           </konva-stage>
+          <div class="btn-wrapper">
+            <v-btn color="#1D9BF0" fixed dark @click="shareTwitter"
+              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+            >
+          </div>
         </div>
         <div class="form-wrapper">
           <v-form>
@@ -362,6 +367,11 @@ export default {
         "background"
       );
     },
+    shareTwitter() {
+      const shareURL =
+        "https://twitter.com/intent/tweet?url=https://resume.hareruyamtg.com&text=%20%23MTG履歴書";
+      location.href = shareURL;
+    },
   },
   mounted() {
     this.$watch(
@@ -437,5 +447,9 @@ export default {
 .cropper {
   max-height: 50vh;
   position: relative;
+}
+
+.btn-wrapper {
+  text-align: left;
 }
 </style>
