@@ -217,17 +217,16 @@ export default {
       return bp === "md" || bp === "lg" || bp === "xl";
     },
     checkConfig() {
-      const size = 16;
       return {
         image: this.image.check,
-        width: size,
-        height: size,
+        width: 15,
+        height: 11,
       };
     },
     playerIconConfig() {
-      const x = 13;
-      const y = 64;
-      const size = 136;
+      const x = 15;
+      const y = 60;
+      const size = 150;
       const image = this.croppedIcon;
       return {
         image,
@@ -240,40 +239,40 @@ export default {
     playerNameConfig() {
       const text = this.formInput.playerName;
       const x = 190;
-      const y = 97;
+      const y = 92;
       return { ...this.fontConfig, text, x, y };
     },
     genderConfig() {
-      const config = { ...this.checkConfig, x: 320, y: 75 };
+      const config = { ...this.checkConfig, x: 285, y: 68 };
       if (this.formInput.gender === "女性") {
-        config.x = 367;
+        config.x = 328;
       }
       return config;
     },
     favoriteColorConfig() {
       const text = this.formInput.favoriteColor;
       const x = 190;
-      const y = 170;
+      const y = 172;
       return { ...this.fontConfig, text, x, y };
     },
     activityAreaConfig() {
       const text = this.formInput.activityArea;
-      const x = 500;
-      const y = 97;
+      const x = 505;
+      const y = 92;
       return { ...this.fontConfig, text, x, y };
     },
     mtgHistoryConfig() {
       const text = this.formInput.mtgHistory;
-      const x = 500;
-      const y = 170;
+      const x = 505;
+      const y = 172;
       return { ...this.fontConfig, text, x, y };
     },
     noticeConfig() {
       const checkArray = [];
-      const x = 24;
+      const x = 22;
       this.formInput.notice.forEach((item) => {
         const index = this.noticeOptions.indexOf(item);
-        checkArray.push({ ...this.checkConfig, x, y: 250 + 19.4 * index });
+        checkArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
       });
       return checkArray;
     },
@@ -282,16 +281,28 @@ export default {
       const x = 191;
       this.formInput.playingFormat.forEach((item) => {
         const index = this.playingFormatOptions.indexOf(item);
-        formatArray.push({ ...this.checkConfig, x, y: 250 + 19.4 * index });
+        formatArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
       });
       return formatArray;
     },
     playerCategoryConfig() {
-      const x = 323;
-      const index = this.playerCategoryOptions.indexOf(
-        this.formInput.playerCategory
-      );
-      return { ...this.checkConfig, x, y: 246 + 19.4 * index };
+      let x = 0;
+      let y = 0;
+      switch (this.formInput.playerCategory) {
+        case "初心者":
+          x = 563;
+          y = 142;
+          break;
+        case "カジュアル・エンジョイ":
+          x = 563;
+          y = 155;
+          break;
+        case "ガチ・競技":
+          x = 617;
+          y = 142;
+          break;
+      }
+      return { ...this.checkConfig, x, y };
     },
     favoriteCardConfig() {
       const text = this.formInput.favoriteCard;
@@ -311,11 +322,19 @@ export default {
     },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
-      const x = 500;
-      const y = 350;
-      const width = 280;
-      const height = 75;
-      return { ...this.fontConfig, text, x, y, width, height };
+      const x = 330;
+      const y = 252;
+      const width = 440;
+      const height = 180;
+      return {
+        ...this.fontConfig,
+        text,
+        x,
+        y,
+        width,
+        height,
+        lineHeight: 1.25,
+      };
     },
   },
   methods: {
@@ -392,7 +411,10 @@ export default {
       require("@/assets/twitter_2107_MTGRirekishoFlame.png"),
       "flame"
     );
-    this.mountImage(require("@/assets/check.svg"), "check");
+    this.mountImage(
+      require("@/assets/twitter_2107_MTGRirekishoReten.png"),
+      "check"
+    );
   },
 };
 </script>
