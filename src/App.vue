@@ -40,8 +40,8 @@
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
           </konva-stage>
-          <div class="btn-wrapper">
-            <v-btn color="#1D9BF0" fixed dark @click="shareTwitter"
+          <div class="btn-wrapper d-none d-md-block">
+            <v-btn color="#1D9BF0" dark @click="shareTwitter"
               ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
             >
           </div>
@@ -101,6 +101,14 @@
             />
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
+          <v-btn
+            color="#1D9BF0"
+            class="d-block d-md-none"
+            block
+            dark
+            @click="shareTwitter"
+            ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+          >
         </div>
       </v-container>
     </v-main>
@@ -424,6 +432,9 @@ export default {
   overflow-y: hidden;
   .preview-wrapper {
     margin-right: 1.5rem;
+    .preview {
+      margin-bottom: 0.5rem;
+    }
   }
   .form-wrapper {
     height: 97vh;
@@ -434,12 +445,12 @@ export default {
 }
 .preview-wrapper {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .preview {
   max-width: 100%;
   height: auto;
-  margin-bottom: 1rem;
 }
 .stage {
   display: none;
