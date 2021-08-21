@@ -45,6 +45,14 @@
         </div>
         <div class="form-wrapper">
           <v-form>
+            <v-select
+              label="背景色"
+              v-model="formInput.background"
+              :items="backgroundOptions"
+              item-text="text"
+              item-value="value"
+              @change="updateBackground"
+            />
             <v-file-input
               label="アイコン"
               v-model="uploadedFile"
@@ -144,6 +152,7 @@ export default {
     cropperModal: false,
     cropperZoom: 0,
     formInput: {
+      background: "w",
       playerIcon: "",
       playerName: "",
       gender: "非公開",
@@ -157,6 +166,13 @@ export default {
       favoriteDeck: "",
       freeSpace: "",
     },
+    backgroundOptions: [
+      { text: "白", value: "w" },
+      { text: "青", value: "u" },
+      { text: "黒", value: "b" },
+      { text: "赤", value: "r" },
+      { text: "緑", value: "g" },
+    ],
     genderOptions: ["男性", "女性", "非公開"],
     noticeOptions: [
       "対戦したい",
@@ -343,6 +359,12 @@ export default {
         this.image[target] = image;
       };
     },
+    updateBackground() {
+      this.mountImage(
+        require(`@/assets/twitter_2107_MTGRirekisho-${this.formInput.background}.jpg`),
+        "background"
+      );
+    },
   },
   mounted() {
     this.$watch(
@@ -365,10 +387,7 @@ export default {
     );
   },
   created() {
-    this.mountImage(
-      require("@/assets/twitter_2107_MTGRirekisho-w.jpg"),
-      "background"
-    );
+    this.updateBackground();
     this.mountImage(
       require("@/assets/twitter_2107_MTGRirekishoFlame.png"),
       "flame"
