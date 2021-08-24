@@ -40,6 +40,11 @@
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
           </konva-stage>
+          <div class="btn-wrapper d-none d-md-block">
+            <v-btn color="#1D9BF0" dark @click="shareTwitter"
+              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+            >
+          </div>
         </div>
         <div class="form-wrapper">
           <v-form>
@@ -96,6 +101,14 @@
             />
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
+          <v-btn
+            color="#1D9BF0"
+            class="d-block d-md-none"
+            block
+            dark
+            @click="shareTwitter"
+            ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+          >
         </div>
       </v-container>
     </v-main>
@@ -362,6 +375,11 @@ export default {
         "background"
       );
     },
+    shareTwitter() {
+      const shareURL =
+        "https://twitter.com/intent/tweet?url=https://resume.hareruyamtg.com&text=%20%23MTG履歴書";
+      location.href = shareURL;
+    },
   },
   mounted() {
     this.$watch(
@@ -414,6 +432,9 @@ export default {
   overflow-y: hidden;
   .preview-wrapper {
     margin-right: 1.5rem;
+    .preview {
+      margin-bottom: 0.5rem;
+    }
   }
   .form-wrapper {
     height: 97vh;
@@ -424,12 +445,12 @@ export default {
 }
 .preview-wrapper {
   text-align: center;
+  margin-bottom: 1rem;
 }
 
 .preview {
   max-width: 100%;
   height: auto;
-  margin-bottom: 1rem;
 }
 .stage {
   display: none;
@@ -437,5 +458,9 @@ export default {
 .cropper {
   max-height: 50vh;
   position: relative;
+}
+
+.btn-wrapper {
+  text-align: left;
 }
 </style>
