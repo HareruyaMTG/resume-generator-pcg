@@ -12,7 +12,8 @@
           />
           <konva-stage :config="stageConfig" ref="stage" class="stage">
             <konva-layer>
-              <konva-image :config="{ image: background }" />
+              <konva-image :config="{ image: image.background }" />
+              <konva-image :config="{ image: image.flame }" />
               <konva-image :config="playerIconConfig" />
               <konva-text :config="playerNameConfig" />
               <konva-image
@@ -36,14 +37,20 @@
                 v-if="formInput.playerCategory"
                 :config="playerCategoryConfig"
               />
-              <konva-text :config="favoriteCardConfig" />
-              <konva-text :config="favoriteDeckConfig" />
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
           </konva-stage>
         </div>
         <div class="form-wrapper">
           <v-form>
+            <v-select
+              label="背景色"
+              v-model="formInput.background"
+              :items="backgroundOptions"
+              item-text="text"
+              item-value="value"
+              @change="updateBackground"
+            />
             <v-file-input
               label="アイコン"
               v-model="uploadedFile"
@@ -65,6 +72,14 @@
             <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
             <v-text-field label="活動地域" v-model="formInput.activityArea" />
             <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
+            <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
+              <v-radio
+                v-for="(item, index) in playerCategoryOptions"
+                :key="`categoryRadio-${index}`"
+                :label="item"
+                :value="item"
+              />
+            </v-radio-group>
             <v-select
               label="要望&お知らせ"
               v-model="formInput.notice"
@@ -79,16 +94,6 @@
               multiple
               chips
             />
-            <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
-              <v-radio
-                v-for="(item, index) in playerCategoryOptions"
-                :key="`categoryRadio-${index}`"
-                :label="item"
-                :value="item"
-              />
-            </v-radio-group>
-            <v-textarea label="好きなカード" v-model="formInput.favoriteCard" />
-            <v-textarea label="好きなデッキ" v-model="formInput.favoriteDeck" />
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
         </div>
@@ -143,20 +148,27 @@ export default {
     cropperModal: false,
     cropperZoom: 0,
     formInput: {
+      background: "w",
       playerIcon: "",
       playerName: "",
       gender: "非公開",
       favoriteColor: "",
       activityArea: "",
       mtgHistory: "",
+      playerCategory: "",
       notice: [],
       playingFormat: [],
-      playerCategory: "",
-      favoriteCard: "",
-      favoriteDeck: "",
       freeSpace: "",
     },
+    backgroundOptions: [
+      { text: "白", value: "w" },
+      { text: "青", value: "u" },
+      { text: "黒", value: "b" },
+      { text: "赤", value: "r" },
+      { text: "緑", value: "g" },
+    ],
     genderOptions: ["男性", "女性", "非公開"],
+    playerCategoryOptions: ["初心者", "カジュアル・エンジョイ", "ガチ・競技"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
@@ -178,7 +190,6 @@ export default {
       "統率者",
       "その他",
     ],
-    playerCategoryOptions: ["初心者", "カジュアル・エンジョイ", "ガチ・競技"],
     stageConfig: {
       width: 800,
       height: 450,
@@ -188,22 +199,28 @@ export default {
       fontFamily: "Yusei Magic",
       wrap: "char",
     },
-    checkConfig: {
-      image: null,
-      width: 16,
-      height: 16,
+    image: {
+      check: null,
+      background: null,
+      flame: null,
     },
-    background: null,
   }),
   computed: {
     isMd() {
       const bp = this.$vuetify.breakpoint.name;
       return bp === "md" || bp === "lg" || bp === "xl";
     },
+    checkConfig() {
+      return {
+        image: this.image.check,
+        width: 15,
+        height: 11,
+      };
+    },
     playerIconConfig() {
-      const x = 13;
-      const y = 64;
-      const size = 136;
+      const x = 15;
+      const y = 60;
+      const size = 150;
       const image = this.croppedIcon;
       return {
         image,
@@ -216,40 +233,59 @@ export default {
     playerNameConfig() {
       const text = this.formInput.playerName;
       const x = 190;
-      const y = 97;
+      const y = 92;
       return { ...this.fontConfig, text, x, y };
     },
     genderConfig() {
-      const config = { ...this.checkConfig, x: 320, y: 75 };
+      const config = { ...this.checkConfig, x: 285, y: 68 };
       if (this.formInput.gender === "女性") {
-        config.x = 367;
+        config.x = 328;
       }
       return config;
     },
     favoriteColorConfig() {
       const text = this.formInput.favoriteColor;
       const x = 190;
-      const y = 170;
+      const y = 172;
       return { ...this.fontConfig, text, x, y };
     },
     activityAreaConfig() {
       const text = this.formInput.activityArea;
-      const x = 500;
-      const y = 97;
+      const x = 505;
+      const y = 92;
       return { ...this.fontConfig, text, x, y };
     },
     mtgHistoryConfig() {
       const text = this.formInput.mtgHistory;
-      const x = 500;
-      const y = 170;
+      const x = 505;
+      const y = 172;
       return { ...this.fontConfig, text, x, y };
+    },
+    playerCategoryConfig() {
+      let x = 0;
+      let y = 0;
+      switch (this.formInput.playerCategory) {
+        case "初心者":
+          x = 563;
+          y = 142;
+          break;
+        case "カジュアル・エンジョイ":
+          x = 563;
+          y = 155;
+          break;
+        case "ガチ・競技":
+          x = 617;
+          y = 142;
+          break;
+      }
+      return { ...this.checkConfig, x, y };
     },
     noticeConfig() {
       const checkArray = [];
-      const x = 24;
+      const x = 22;
       this.formInput.notice.forEach((item) => {
         const index = this.noticeOptions.indexOf(item);
-        checkArray.push({ ...this.checkConfig, x, y: 250 + 19.4 * index });
+        checkArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
       });
       return checkArray;
     },
@@ -258,40 +294,25 @@ export default {
       const x = 191;
       this.formInput.playingFormat.forEach((item) => {
         const index = this.playingFormatOptions.indexOf(item);
-        formatArray.push({ ...this.checkConfig, x, y: 250 + 19.4 * index });
+        formatArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
       });
       return formatArray;
     },
-    playerCategoryConfig() {
-      const x = 323;
-      const index = this.playerCategoryOptions.indexOf(
-        this.formInput.playerCategory
-      );
-      return { ...this.checkConfig, x, y: 246 + 19.4 * index };
-    },
-    favoriteCardConfig() {
-      const text = this.formInput.favoriteCard;
-      const x = 324;
-      const y = 350;
-      const width = 150;
-      const height = 75;
-      return { ...this.fontConfig, text, x, y, width, height };
-    },
-    favoriteDeckConfig() {
-      const text = this.formInput.favoriteDeck;
-      const x = 500;
-      const y = 243;
-      const width = 280;
-      const height = 50;
-      return { ...this.fontConfig, text, x, y, width, height };
-    },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
-      const x = 500;
-      const y = 350;
-      const width = 280;
-      const height = 75;
-      return { ...this.fontConfig, text, x, y, width, height };
+      const x = 330;
+      const y = 252;
+      const width = 440;
+      const height = 180;
+      return {
+        ...this.fontConfig,
+        text,
+        x,
+        y,
+        width,
+        height,
+        lineHeight: 1.25,
+      };
     },
   },
   methods: {
@@ -328,6 +349,19 @@ export default {
 
       this.cropperModal = false;
     },
+    mountImage(path, target) {
+      const image = new window.Image();
+      image.src = path;
+      image.onload = () => {
+        this.image[target] = image;
+      };
+    },
+    updateBackground() {
+      this.mountImage(
+        require(`@/assets/twitter_2107_MTGRirekisho-${this.formInput.background}.jpg`),
+        "background"
+      );
+    },
   },
   mounted() {
     this.$watch(
@@ -341,22 +375,24 @@ export default {
       { deep: true }
     );
 
-    this.$watch("background", function () {
-      this.updateCanvas();
-    });
+    this.$watch(
+      "image",
+      function () {
+        this.updateCanvas();
+      },
+      { deep: true }
+    );
   },
   created() {
-    const background = new window.Image();
-    background.src = require("@/assets/twitter_2107_MTGRirekisho.jpg");
-    background.onload = () => {
-      this.background = background;
-    };
-
-    const check = new window.Image();
-    check.src = require("@/assets/check.svg");
-    check.onload = () => {
-      this.checkConfig.image = check;
-    };
+    this.updateBackground();
+    this.mountImage(
+      require("@/assets/twitter_2107_MTGRirekishoFlame.png"),
+      "flame"
+    );
+    this.mountImage(
+      require("@/assets/twitter_2107_MTGRirekishoReten.png"),
+      "check"
+    );
   },
 };
 </script>
