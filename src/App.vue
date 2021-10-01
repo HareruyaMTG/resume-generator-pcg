@@ -386,7 +386,7 @@ export default {
     },
     updateBackground() {
       this.mountImage(
-        require(`@/assets/twitter_2107_MTGRirekisho-${this.formInput.background}.jpg`),
+        require(`@/assets/twitter_2107_MTGRirekisho_${this.formInput.background}.png`),
         "background"
       );
     },
