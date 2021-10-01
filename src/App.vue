@@ -50,6 +50,9 @@
             </konva-layer>
           </konva-stage>
           <div class="btn-wrapper d-none d-md-block">
+            <v-btn color="primary" v-if="!isMobile"
+              ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+            >
             <v-btn color="#1D9BF0" dark @click="shareTwitter"
               ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
             >
@@ -125,14 +128,14 @@
             />
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
-          <v-btn
-            color="#1D9BF0"
-            class="d-block d-md-none"
-            block
-            dark
-            @click="shareTwitter"
-            ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
-          >
+          <div class="btn-wrapper-sm d-block d-md-none">
+            <v-btn color="primary" v-if="!isMobile" block
+              ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+            >
+            <v-btn color="#1D9BF0" block dark @click="shareTwitter"
+              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+            >
+          </div>
           <footer class="footer d-block d-md-none">
             <a
               href="https://www.hareruyamtg.com/ja/"
@@ -512,6 +515,14 @@ export default {
 
 .btn-wrapper {
   text-align: left;
+  button + button {
+    margin-left: 1rem;
+  }
+}
+.btn-wrapper-sm {
+  button + button {
+    margin-top: 1rem;
+  }
 }
 
 .footer {
