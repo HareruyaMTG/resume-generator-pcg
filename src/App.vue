@@ -42,6 +42,10 @@
                 :key="`format-${index}`"
                 :config="item"
               />
+              <konva-text
+                v-if="formInput.playingFormat.includes('その他')"
+                :config="otherFormatConfig"
+              />
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
           </konva-stage>
@@ -105,6 +109,11 @@
               :items="playingFormatOptions"
               multiple
               chips
+            />
+            <v-text-field
+              v-if="formInput.playingFormat.includes('その他')"
+              label="その他のフォーマット"
+              v-model="formInput.otherFormat"
             />
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
@@ -182,6 +191,7 @@ export default {
       playStyle: [],
       notice: [],
       playingFormat: [],
+      otherFormat: "",
       freeSpace: "",
     },
     backgroundOptions: [
@@ -320,6 +330,13 @@ export default {
         formatArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
       });
       return formatArray;
+    },
+    otherFormatConfig() {
+      const text = this.formInput.otherFormat;
+      const fontSize = 12;
+      const x = 200;
+      const y = 404;
+      return { ...this.fontConfig, text, fontSize, x, y };
     },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
