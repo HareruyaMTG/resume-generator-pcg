@@ -271,7 +271,7 @@ export default {
       const text = this.formInput.favoriteColor;
       const fontSize = fontSizeAdjustment(text, 13, 290);
       const x = 190;
-      const y = 184 - fontSize;
+      const y = 184 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     activityAreaConfig() {
