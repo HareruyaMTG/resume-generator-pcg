@@ -16,8 +16,18 @@
               <konva-image :config="playerIconConfig" />
               <konva-text :config="playerNameConfig" />
               <konva-image
-                v-if="formInput.gender !== '非公開'"
+                v-if="formInput.gender !== '指定しない'"
                 :config="genderConfig"
+              />
+              <konva-rect
+                v-if="formInput.gender === '指定しない'"
+                :config="{
+                  x: 285,
+                  y: 66,
+                  width: 82,
+                  height: 16,
+                  fill: '#ffffff',
+                }"
               />
               <konva-text :config="favoriteColorConfig" />
               <konva-text :config="activityAreaConfig" />
@@ -31,6 +41,10 @@
                 v-for="(item, index) in playingFormatConfig"
                 :key="`format-${index}`"
                 :config="item"
+              />
+              <konva-text
+                v-if="formInput.playingFormat.includes('その他')"
+                :config="otherFormatConfig"
               />
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
@@ -68,14 +82,11 @@
               label="プレイヤーネーム"
               v-model="formInput.playerName"
             />
-            <v-radio-group label="性別" v-model="formInput.gender">
-              <v-radio
-                v-for="(item, index) in genderOptions"
-                :key="`genderRadio-${index}`"
-                :label="item"
-                :value="item"
-              />
-            </v-radio-group>
+            <v-select
+              label="性別"
+              v-model="formInput.gender"
+              :items="genderOptions"
+            />
             <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
             <v-text-field label="活動地域" v-model="formInput.activityArea" />
             <v-select
@@ -98,6 +109,11 @@
               :items="playingFormatOptions"
               multiple
               chips
+            />
+            <v-text-field
+              v-if="formInput.playingFormat.includes('その他')"
+              label="その他のフォーマット"
+              v-model="formInput.otherFormat"
             />
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
@@ -169,12 +185,13 @@ export default {
       font: "Yusei Magic",
       playerIcon: "",
       playerName: "",
-      gender: "非公開",
+      gender: "指定しない",
       favoriteColor: "",
       activityArea: "",
       playStyle: [],
       notice: [],
       playingFormat: [],
+      otherFormat: "",
       freeSpace: "",
     },
     backgroundOptions: [
@@ -189,7 +206,7 @@ export default {
       { text: "源ノ角ゴシック", value: "Noto Sans JP" },
       { text: "源ノ明朝", value: "Noto Serif JP" },
     ],
-    genderOptions: ["男性", "女性", "非公開"],
+    genderOptions: ["男性", "女性", "指定しない"],
     playStyleOptions: ["初心者", "カジュアル", "競技", "コレクター"],
     noticeOptions: [
       "対戦したい",
@@ -314,6 +331,13 @@ export default {
       });
       return formatArray;
     },
+    otherFormatConfig() {
+      const text = this.formInput.otherFormat;
+      const fontSize = 12;
+      const x = 200;
+      const y = 404;
+      return { ...this.fontConfig, text, fontSize, x, y };
+    },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
       const x = 330;
@@ -426,6 +450,7 @@ export default {
   justify-content: center;
   background: #fff;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+  padding: 0 0.75rem 0 0.75rem;
 }
 .container.is-md {
   display: flex;
@@ -437,7 +462,8 @@ export default {
     }
   }
   .form-wrapper {
-    height: 97vh;
+    height: 100vh;
+    padding: 0.75rem 0;
     overflow-x: hidden;
     overflow-y: scroll;
     flex-basis: 32rem;
@@ -445,6 +471,7 @@ export default {
 }
 .preview-wrapper {
   text-align: center;
+  padding-top: 0.75rem;
   margin-bottom: 1rem;
 }
 
