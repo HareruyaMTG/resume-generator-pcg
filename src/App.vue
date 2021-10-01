@@ -60,7 +60,7 @@
               target="_blank"
               rel="noopener"
               >株式会社晴れる屋</a
-            ><a>利用規約</a>
+            ><a @click.prevent="termsModal = true">利用規約</a>
           </footer>
         </div>
         <div class="form-wrapper">
@@ -169,11 +169,22 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="termsModal">
+      <v-card>
+        <v-card-title>利用規約</v-card-title>
+        <v-card-text><termsText /></v-card-text>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn @click="termsModal = false" text color="primary">閉じる</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
 import VueCropper from "vue-cropperjs";
+import termsText from "./components/termsText.vue";
 import "cropperjs/dist/cropper.css";
 
 const fontSizeAdjustment = (text, invaliantLength, width) => {
@@ -182,12 +193,13 @@ const fontSizeAdjustment = (text, invaliantLength, width) => {
 
 export default {
   name: "App",
-  components: { VueCropper },
+  components: { VueCropper, termsText },
   data: () => ({
     imgSrc: "",
     uploadedFile: null,
     croppedIcon: null,
     cropperModal: false,
+    termsModal: false,
     formInput: {
       background: "w",
       font: "Yusei Magic",
