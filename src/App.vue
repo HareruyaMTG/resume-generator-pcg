@@ -151,6 +151,10 @@
 import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
 
+const fontSizeAdjustment = (text, invaliantLength, width) => {
+  return text.length > invaliantLength ? width / text.length : 24;
+};
+
 export default {
   name: "App",
   components: { VueCropper },
@@ -251,9 +255,10 @@ export default {
     },
     playerNameConfig() {
       const text = this.formInput.playerName;
+      const fontSize = fontSizeAdjustment(text, 13, 290);
       const x = 190;
-      const y = 92;
-      return { ...this.fontConfig, text, x, y };
+      const y = 104 - fontSize / 2;
+      return { ...this.fontConfig, text, fontSize, x, y };
     },
     genderConfig() {
       const config = { ...this.checkConfig, x: 285, y: 68 };
@@ -264,15 +269,17 @@ export default {
     },
     favoriteColorConfig() {
       const text = this.formInput.favoriteColor;
+      const fontSize = fontSizeAdjustment(text, 13, 290);
       const x = 190;
-      const y = 172;
-      return { ...this.fontConfig, text, x, y };
+      const y = 184 - fontSize / 2;
+      return { ...this.fontConfig, text, fontSize, x, y };
     },
     activityAreaConfig() {
       const text = this.formInput.activityArea;
+      const fontSize = fontSizeAdjustment(text, 12, 290);
       const x = 505;
-      const y = 92;
-      return { ...this.fontConfig, text, x, y };
+      const y = 104 - fontSize / 2;
+      return { ...this.fontConfig, text, fontSize, x, y };
     },
     playStyleConfig() {
       const playStyleOptions = Array.from(this.playStyleOptions);
@@ -284,7 +291,7 @@ export default {
           return 1;
         })
         .toString();
-      const fontSize = text.length > 13 ? 290 / text.length : 24;
+      const fontSize = fontSizeAdjustment(text, 13, 290);
       const x = 505;
       const y = 184 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
