@@ -275,10 +275,19 @@ export default {
       return { ...this.fontConfig, text, x, y };
     },
     playStyleConfig() {
-      const text = this.formInput.playStyle;
+      const playStyleOptions = Array.from(this.playStyleOptions);
+      const text = Array.from(this.formInput.playStyle)
+        .sort(function (a, b) {
+          if (playStyleOptions.indexOf(a) < playStyleOptions.indexOf(b)) {
+            return -1;
+          }
+          return 1;
+        })
+        .toString();
+      const fontSize = text.length > 13 ? 290 / text.length : 24;
       const x = 505;
-      const y = 172;
-      return { ...this.fontConfig, text, x, y };
+      const y = 184 - fontSize / 2;
+      return { ...this.fontConfig, text, fontSize, x, y };
     },
     noticeConfig() {
       const checkArray = [];
