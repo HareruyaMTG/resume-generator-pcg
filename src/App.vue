@@ -16,8 +16,18 @@
               <konva-image :config="playerIconConfig" />
               <konva-text :config="playerNameConfig" />
               <konva-image
-                v-if="formInput.gender !== '非公開'"
+                v-if="formInput.gender !== '指定しない'"
                 :config="genderConfig"
+              />
+              <konva-rect
+                v-if="formInput.gender === '指定しない'"
+                :config="{
+                  x: 285,
+                  y: 66,
+                  width: 82,
+                  height: 16,
+                  fill: '#ffffff',
+                }"
               />
               <konva-text :config="favoriteColorConfig" />
               <konva-text :config="activityAreaConfig" />
@@ -166,7 +176,7 @@ export default {
       font: "Yusei Magic",
       playerIcon: "",
       playerName: "",
-      gender: "",
+      gender: "指定しない",
       favoriteColor: "",
       activityArea: "",
       playStyle: [],
@@ -186,7 +196,7 @@ export default {
       { text: "源ノ角ゴシック", value: "Noto Sans JP" },
       { text: "源ノ明朝", value: "Noto Serif JP" },
     ],
-    genderOptions: ["男性", "女性", "非公開"],
+    genderOptions: ["男性", "女性", "指定しない"],
     playStyleOptions: ["初心者", "カジュアル", "競技", "コレクター"],
     noticeOptions: [
       "対戦したい",
