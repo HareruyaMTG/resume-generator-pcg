@@ -54,6 +54,14 @@
               ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
             >
           </div>
+          <footer class="footer footer-md d-none d-md-block">
+            <a
+              href="https://www.hareruyamtg.com/ja/"
+              target="_blank"
+              rel="noopener"
+              >株式会社晴れる屋</a
+            ><a>利用規約</a>
+          </footer>
         </div>
         <div class="form-wrapper">
           <v-form>
@@ -125,6 +133,14 @@
             @click="shareTwitter"
             ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
           >
+          <footer class="footer d-block d-md-none">
+            <a
+              href="https://www.hareruyamtg.com/ja/"
+              target="_blank"
+              rel="noopener"
+              >株式会社晴れる屋</a
+            ><a>利用規約</a>
+          </footer>
         </div>
       </v-container>
     </v-main>
@@ -477,6 +493,29 @@ export default {
 }
 
 .btn-wrapper {
+  text-align: left;
+}
+
+.footer {
+  font-size: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  color: #888888;
+  a {
+    color: #888888;
+    text-decoration: none;
+    &:hover {
+      color: #333333;
+    }
+    + a {
+      margin-left: 1rem;
+    }
+  }
+}
+.footer-md {
+  position: absolute;
+  padding: 0;
+  bottom: 0.75rem;
   text-align: left;
 }
 </style>
