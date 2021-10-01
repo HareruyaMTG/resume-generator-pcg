@@ -54,6 +54,14 @@
               ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
             >
           </div>
+          <footer class="footer footer-md d-none d-md-block">
+            <a
+              href="https://www.hareruyamtg.com/ja/"
+              target="_blank"
+              rel="noopener"
+              >株式会社晴れる屋</a
+            ><a @click.prevent="termsModal = true">利用規約</a>
+          </footer>
         </div>
         <div class="form-wrapper">
           <v-form>
@@ -125,6 +133,14 @@
             @click="shareTwitter"
             ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
           >
+          <footer class="footer d-block d-md-none">
+            <a
+              href="https://www.hareruyamtg.com/ja/"
+              target="_blank"
+              rel="noopener"
+              >株式会社晴れる屋</a
+            ><a @click.prevent="termsModal = true">利用規約</a>
+          </footer>
         </div>
       </v-container>
     </v-main>
@@ -153,11 +169,24 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="termsModal" max-width="40rem" scrollable>
+      <v-card>
+        <v-card-title>利用規約</v-card-title>
+        <v-divider />
+        <v-card-text><termsText /></v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn @click="termsModal = false" text color="primary">閉じる</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
 </template>
 
 <script>
 import VueCropper from "vue-cropperjs";
+import termsText from "./components/termsText.vue";
 import "cropperjs/dist/cropper.css";
 
 const fontSizeAdjustment = (text, invaliantLength, width) => {
@@ -166,12 +195,13 @@ const fontSizeAdjustment = (text, invaliantLength, width) => {
 
 export default {
   name: "App",
-  components: { VueCropper },
+  components: { VueCropper, termsText },
   data: () => ({
     imgSrc: "",
     uploadedFile: null,
     croppedIcon: null,
     cropperModal: false,
+    termsModal: false,
     formInput: {
       background: "w",
       font: "Yusei Magic",
@@ -478,5 +508,32 @@ export default {
 
 .btn-wrapper {
   text-align: left;
+}
+
+.footer {
+  font-size: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  color: #888888;
+  a {
+    color: #888888;
+    text-decoration: none;
+    &:hover {
+      color: #333333;
+    }
+    + a {
+      margin-left: 1rem;
+    }
+  }
+}
+.footer-md {
+  position: absolute;
+  padding: 0;
+  bottom: 0.75rem;
+  text-align: left;
+}
+
+.v-card__title {
+  font-weight: 700;
 }
 </style>
