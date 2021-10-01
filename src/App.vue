@@ -21,7 +21,7 @@
               />
               <konva-text :config="favoriteColorConfig" />
               <konva-text :config="activityAreaConfig" />
-              <konva-text :config="mtgHistoryConfig" />
+              <konva-text :config="playStyleConfig" />
               <konva-image
                 v-for="(item, index) in noticeConfig"
                 :key="`notice-${index}`"
@@ -31,10 +31,6 @@
                 v-for="(item, index) in playingFormatConfig"
                 :key="`format-${index}`"
                 :config="item"
-              />
-              <konva-image
-                v-if="formInput.playerCategory"
-                :config="playerCategoryConfig"
               />
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
@@ -82,15 +78,13 @@
             </v-radio-group>
             <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
             <v-text-field label="活動地域" v-model="formInput.activityArea" />
-            <v-text-field label="MTG歴" v-model="formInput.mtgHistory" />
-            <v-radio-group label="カテゴリ" v-model="formInput.playerCategory">
-              <v-radio
-                v-for="(item, index) in playerCategoryOptions"
-                :key="`categoryRadio-${index}`"
-                :label="item"
-                :value="item"
-              />
-            </v-radio-group>
+            <v-select
+              label="プレイスタイル"
+              v-model="formInput.playStyle"
+              :items="playStyleOptions"
+              multiple
+              chips
+            />
             <v-select
               label="要望&お知らせ"
               v-model="formInput.notice"
@@ -174,8 +168,7 @@ export default {
       gender: "非公開",
       favoriteColor: "",
       activityArea: "",
-      mtgHistory: "",
-      playerCategory: "",
+      playStyle: [],
       notice: [],
       playingFormat: [],
       freeSpace: "",
@@ -193,7 +186,7 @@ export default {
       { text: "源ノ明朝", value: "Noto Serif JP" },
     ],
     genderOptions: ["男性", "女性", "非公開"],
-    playerCategoryOptions: ["初心者", "カジュアル・エンジョイ", "ガチ・競技"],
+    playStyleOptions: ["初心者", "カジュアル", "競技", "コレクター"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
@@ -281,30 +274,11 @@ export default {
       const y = 92;
       return { ...this.fontConfig, text, x, y };
     },
-    mtgHistoryConfig() {
-      const text = this.formInput.mtgHistory;
+    playStyleConfig() {
+      const text = this.formInput.playStyle;
       const x = 505;
       const y = 172;
       return { ...this.fontConfig, text, x, y };
-    },
-    playerCategoryConfig() {
-      let x = 0;
-      let y = 0;
-      switch (this.formInput.playerCategory) {
-        case "初心者":
-          x = 563;
-          y = 142;
-          break;
-        case "カジュアル・エンジョイ":
-          x = 563;
-          y = 155;
-          break;
-        case "ガチ・競技":
-          x = 617;
-          y = 142;
-          break;
-      }
-      return { ...this.checkConfig, x, y };
     },
     noticeConfig() {
       const checkArray = [];
