@@ -383,9 +383,14 @@ export default {
       };
     },
     updateBackground() {
+      const color = this.formInput.background;
       this.mountImage(
-        require(`@/assets/twitter_2107_MTGRirekisho_${this.formInput.background}.png`),
+        require(`@/assets/twitter_2107_MTGRirekisho_${color}.png`),
         "background"
+      );
+      this.mountImage(
+        require(`@/assets/twitter_2107_MTGRirekishoReten_${color}.png`),
+        "check"
       );
     },
     shareTwitter() {
@@ -416,10 +421,6 @@ export default {
   },
   created() {
     this.updateBackground();
-    this.mountImage(
-      require("@/assets/twitter_2107_MTGRirekishoReten.png"),
-      "check"
-    );
   },
 };
 </script>
