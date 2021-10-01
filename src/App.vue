@@ -139,7 +139,7 @@
               target="_blank"
               rel="noopener"
               >株式会社晴れる屋</a
-            ><a>利用規約</a>
+            ><a @click.prevent="termsModal = true">利用規約</a>
           </footer>
         </div>
       </v-container>
