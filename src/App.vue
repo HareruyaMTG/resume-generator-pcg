@@ -13,7 +13,6 @@
           <konva-stage :config="stageConfig" ref="stage" class="stage">
             <konva-layer>
               <konva-image :config="{ image: image.background }" />
-              <konva-image :config="{ image: image.flame }" />
               <konva-image :config="playerIconConfig" />
               <konva-text :config="playerNameConfig" />
               <konva-image
@@ -223,7 +222,6 @@ export default {
     image: {
       check: null,
       background: null,
-      flame: null,
     },
   }),
   computed: {
@@ -418,10 +416,6 @@ export default {
   },
   created() {
     this.updateBackground();
-    this.mountImage(
-      require("@/assets/twitter_2107_MTGRirekishoFlame.png"),
-      "flame"
-    );
     this.mountImage(
       require("@/assets/twitter_2107_MTGRirekishoReten.png"),
       "check"
