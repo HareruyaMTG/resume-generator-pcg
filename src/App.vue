@@ -68,14 +68,11 @@
               label="プレイヤーネーム"
               v-model="formInput.playerName"
             />
-            <v-radio-group label="性別" v-model="formInput.gender">
-              <v-radio
-                v-for="(item, index) in genderOptions"
-                :key="`genderRadio-${index}`"
-                :label="item"
-                :value="item"
-              />
-            </v-radio-group>
+            <v-select
+              label="性別"
+              v-model="formInput.gender"
+              :items="genderOptions"
+            />
             <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
             <v-text-field label="活動地域" v-model="formInput.activityArea" />
             <v-select
@@ -169,7 +166,7 @@ export default {
       font: "Yusei Magic",
       playerIcon: "",
       playerName: "",
-      gender: "非公開",
+      gender: "",
       favoriteColor: "",
       activityArea: "",
       playStyle: [],
