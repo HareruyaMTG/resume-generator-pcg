@@ -186,8 +186,11 @@
 
 <script>
 import VueCropper from "vue-cropperjs";
-import termsText from "./components/termsText.vue";
 import "cropperjs/dist/cropper.css";
+
+import isMobile from "ismobilejs";
+
+import termsText from "./components/termsText.vue";
 
 const fontSizeAdjustment = (text, invaliantLength, width) => {
   return text.length > invaliantLength ? width / text.length : 24;
@@ -197,6 +200,7 @@ export default {
   name: "App",
   components: { VueCropper, termsText },
   data: () => ({
+    isMobile: isMobile().any,
     imgSrc: "",
     uploadedFile: null,
     croppedIcon: null,
