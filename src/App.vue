@@ -426,6 +426,7 @@ export default {
   justify-content: center;
   background: #fff;
   box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+  padding: 0 0.75rem 0 0.75rem;
 }
 .container.is-md {
   display: flex;
@@ -437,7 +438,8 @@ export default {
     }
   }
   .form-wrapper {
-    height: 97vh;
+    height: 100vh;
+    padding: 0.75rem 0;
     overflow-x: hidden;
     overflow-y: scroll;
     flex-basis: 32rem;
@@ -445,6 +447,7 @@ export default {
 }
 .preview-wrapper {
   text-align: center;
+  padding-top: 0.75rem;
   margin-bottom: 1rem;
 }
 
