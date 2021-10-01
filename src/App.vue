@@ -146,13 +146,6 @@
             :cropBoxResizable="false"
             @ready="initCropper"
           />
-          <v-slider
-            v-model="cropperZoom"
-            :min="10"
-            append-icon="mdi-magnify-plus-outline"
-            prepend-icon="mdi-magnify-minus-outline"
-            @change="cropperZoomTo"
-          />
         </v-card-text>
         <v-card-actions>
           <v-spacer />
@@ -179,7 +172,6 @@ export default {
     uploadedFile: null,
     croppedIcon: null,
     cropperModal: false,
-    cropperZoom: 0,
     formInput: {
       background: "w",
       font: "Yusei Magic",
@@ -369,11 +361,8 @@ export default {
       }
     },
     initCropper() {
-      this.cropperZoom = 0;
-      this.$refs.cropper.replace(this.formInput.playerIcon);
-    },
-    cropperZoomTo() {
-      this.$refs.cropper.zoomTo(this.cropperZoom / 100);
+      const cropper = this.$refs.cropper;
+      cropper.replace(this.formInput.playerIcon);
     },
     updateIcon() {
       const icon = new window.Image();
