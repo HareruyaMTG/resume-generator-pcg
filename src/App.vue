@@ -151,6 +151,10 @@
 import VueCropper from "vue-cropperjs";
 import "cropperjs/dist/cropper.css";
 
+const fontSizeAdjustment = (text, invaliantLength, width) => {
+  return text.length > invaliantLength ? width / text.length : 24;
+};
+
 export default {
   name: "App",
   components: { VueCropper },
@@ -284,7 +288,7 @@ export default {
           return 1;
         })
         .toString();
-      const fontSize = text.length > 13 ? 290 / text.length : 24;
+      const fontSize = fontSizeAdjustment(text, 13, 290);
       const x = 505;
       const y = 184 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
