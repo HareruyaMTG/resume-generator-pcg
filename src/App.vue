@@ -169,10 +169,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="termsModal">
+    <v-dialog v-model="termsModal" max-width="40rem" scrollable>
       <v-card>
         <v-card-title>利用規約</v-card-title>
+        <v-divider />
         <v-card-text><termsText /></v-card-text>
+        <v-divider />
         <v-card-actions>
           <v-spacer />
           <v-btn @click="termsModal = false" text color="primary">閉じる</v-btn>
@@ -529,5 +531,9 @@ export default {
   padding: 0;
   bottom: 0.75rem;
   text-align: left;
+}
+
+.v-card__title {
+  font-weight: 700;
 }
 </style>
