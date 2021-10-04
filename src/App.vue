@@ -295,6 +295,13 @@ export default {
       { text: "赤", value: "r" },
       { text: "緑", value: "g" },
     ],
+    textColor: {
+      w: "#3D1A00",
+      u: "#143E51",
+      b: "#431838",
+      r: "#3D0B00",
+      g: "#233823",
+    },
     fontOptions: [
       { text: "油性マジック", value: "Yusei Magic" },
       { text: "源ノ角ゴシック", value: "Noto Sans JP" },
@@ -341,6 +348,7 @@ export default {
       return {
         fontSize: 24,
         fontFamily: this.formInput.font,
+        fill: this.textColor[this.formInput.background],
         wrap: "char",
       };
     },
