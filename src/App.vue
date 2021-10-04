@@ -50,7 +50,7 @@
             </konva-layer>
           </konva-stage>
           <div class="btn-wrapper d-none d-md-block">
-            <v-btn color="primary" v-if="!isMobile"
+            <v-btn color="primary" @click="saveImage"
               ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
             >
             <v-btn color="#1D9BF0" dark @click="shareTwitter"
@@ -129,7 +129,7 @@
             <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
           </v-form>
           <div class="btn-wrapper-sm d-block d-md-none">
-            <v-btn color="primary" v-if="!isMobile" block
+            <v-btn color="primary" block @click="saveImage"
               ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
             >
             <v-btn color="#1D9BF0" block dark @click="shareTwitter"
@@ -432,6 +432,23 @@ export default {
         require(`@/assets/twitter_2107_MTGRirekishoReten_${color}.png`),
         "check"
       );
+    },
+    saveImage() {
+      if (this.isMobile) {
+        let imgWindow = window.open("");
+        imgWindow.document.write(
+          "<iframe width='100%' height='100%' scrolling='no' frameborder='no' src='" +
+            encodeURI(this.imgSrc) +
+            "'></iframe>"
+        );
+        return;
+      }
+      const link = document.createElement("a");
+      link.download = "mtgprofile";
+      link.href = this.imgSrc;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     },
     shareTwitter() {
       const shareURL =
