@@ -50,12 +50,36 @@
             </konva-layer>
           </konva-stage>
           <div class="btn-wrapper d-none d-md-block">
-            <v-btn color="primary" v-if="!isMobile" @click="saveImage"
-              ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
-            >
-            <v-btn color="#1D9BF0" dark @click="shareTwitter"
-              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
-            >
+            <div class="step step-md">
+              <div>
+                <stepTitle number="1" text="情報を入力する" />
+                <div class="step-description">
+                  情報を入力して画像を作成しましょう。
+                </div>
+              </div>
+            </div>
+            <div class="step step-md">
+              <div>
+                <stepTitle number="2" text="画像を保存する" />
+                <div class="step-description">
+                  ボタンをクリックして画像を保存しましょう。
+                </div>
+              </div>
+              <v-btn color="primary" v-if="!isMobile" @click="saveImage"
+                ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+              >
+            </div>
+            <div class="step step-md">
+              <div>
+                <stepTitle number="3" text="SNSでシェアする" />
+                <div class="step-description">
+                  保存した画像を添付してSNSでシェアしましょう。
+                </div>
+              </div>
+              <v-btn color="#1D9BF0" dark @click="shareTwitter"
+                ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+              >
+            </div>
           </div>
           <footer class="footer footer-md d-none d-md-block">
             <a
@@ -515,6 +539,12 @@ export default {
 };
 </script>
 
+<style lang="scss">
+html {
+  overflow-y: auto !important;
+}
+</style>
+
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&family=Noto+Serif+JP:wght@700&family=Yusei+Magic&display=swap");
 
@@ -535,7 +565,7 @@ export default {
   .preview-wrapper {
     margin-right: 1.5rem;
     .preview {
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
   }
   .form-wrapper {
@@ -599,5 +629,15 @@ export default {
 }
 .step-description {
   margin: 0.75rem 0 1rem 0;
+}
+.step-md {
+  display: flex;
+  margin-bottom: 1.5rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  .step-description {
+    line-height: 1;
+    margin-bottom: 0;
+  }
 }
 </style>
