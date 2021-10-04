@@ -594,10 +594,10 @@ export default {
   text-align: left;
 }
 
-.step + .step {
-  margin-top: 1rem;
+.step {
+  margin-bottom: 2rem;
 }
 .step-description {
-  margin: 0.5rem 0 0.75rem 0;
+  margin: 0.75rem 0 1rem 0;
 }
 </style>
