@@ -111,6 +111,7 @@
                 v-model="uploadedFile"
                 accept="image/*"
                 @change="uploadIcon"
+                :clearable="false"
               />
               <v-text-field
                 label="プレイヤーネーム"
