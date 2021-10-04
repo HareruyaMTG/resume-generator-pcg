@@ -111,6 +111,7 @@
                 v-model="uploadedFile"
                 accept="image/*"
                 @change="uploadIcon"
+                :clearable="false"
               />
               <v-text-field
                 label="プレイヤーネーム"
@@ -132,6 +133,7 @@
                 :items="playStyleOptions"
                 multiple
                 chips
+                deletable-chips
               />
               <v-select
                 label="要望&お知らせ"
@@ -139,6 +141,7 @@
                 :items="noticeOptions"
                 multiple
                 chips
+                deletable-chips
               />
               <v-select
                 label="フォーマット"
@@ -146,6 +149,7 @@
                 :items="playingFormatOptions"
                 multiple
                 chips
+                deletable-chips
               />
               <v-text-field
                 v-if="formInput.playingFormat.includes('その他')"
