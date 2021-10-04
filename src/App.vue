@@ -50,95 +50,162 @@
             </konva-layer>
           </konva-stage>
           <div class="btn-wrapper d-none d-md-block">
-            <v-btn color="#1D9BF0" dark @click="shareTwitter"
-              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
-            >
+            <div class="step step-md">
+              <div>
+                <stepTitle number="1" text="情報を入力する" />
+                <div class="step-description">
+                  情報を入力して画像を作成しましょう。
+                </div>
+              </div>
+            </div>
+            <div class="step step-md">
+              <div>
+                <stepTitle number="2" text="画像を保存する" />
+                <div class="step-description">
+                  ボタンをクリックして画像を保存しましょう。
+                </div>
+              </div>
+              <v-btn color="primary" v-if="!isMobile" @click="saveImage"
+                ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+              >
+            </div>
+            <div class="step step-md">
+              <div>
+                <stepTitle number="3" text="SNSでシェアする" />
+                <div class="step-description">
+                  保存した画像を添付してSNSでシェアしましょう。
+                </div>
+              </div>
+              <v-btn color="#1D9BF0" dark @click="shareTwitter"
+                ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+              >
+            </div>
           </div>
-          <footer class="footer footer-md d-none d-md-block">
-            <a
-              href="https://www.hareruyamtg.com/ja/"
-              target="_blank"
-              rel="noopener"
-              >株式会社晴れる屋</a
-            ><a @click.prevent="termsModal = true">利用規約</a>
-          </footer>
         </div>
         <div class="form-wrapper">
-          <v-form>
-            <v-select
-              label="背景色"
-              v-model="formInput.background"
-              :items="backgroundOptions"
-              item-text="text"
-              item-value="value"
-              @change="updateBackground"
-            />
-            <v-select
-              label="フォント"
-              v-model="formInput.font"
-              :items="fontOptions"
-              item-text="text"
-              item-value="value"
-            />
-            <v-file-input
-              label="アイコン"
-              v-model="uploadedFile"
-              accept="image/*"
-              @change="uploadIcon"
-            />
-            <v-text-field
-              label="プレイヤーネーム"
-              v-model="formInput.playerName"
-            />
-            <v-select
-              label="性別"
-              v-model="formInput.gender"
-              :items="genderOptions"
-            />
-            <v-text-field label="好きな色" v-model="formInput.favoriteColor" />
-            <v-text-field label="活動地域" v-model="formInput.activityArea" />
-            <v-select
-              label="プレイスタイル"
-              v-model="formInput.playStyle"
-              :items="playStyleOptions"
-              multiple
-              chips
-            />
-            <v-select
-              label="要望&お知らせ"
-              v-model="formInput.notice"
-              :items="noticeOptions"
-              multiple
-              chips
-            />
-            <v-select
-              label="フォーマット"
-              v-model="formInput.playingFormat"
-              :items="playingFormatOptions"
-              multiple
-              chips
-            />
-            <v-text-field
-              v-if="formInput.playingFormat.includes('その他')"
-              label="その他のフォーマット"
-              v-model="formInput.otherFormat"
-            />
-            <v-textarea label="フリースペース" v-model="formInput.freeSpace" />
-          </v-form>
-          <v-btn
-            color="#1D9BF0"
-            class="d-block d-md-none"
-            block
-            dark
-            @click="shareTwitter"
-            ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
-          >
-          <footer class="footer d-block d-md-none">
+          <section class="step">
+            <div class="d-block d-md-none">
+              <stepTitle number="1" text="情報を入力する" />
+              <div class="step-description">
+                情報を入力して画像を作成しましょう。
+              </div>
+            </div>
+            <v-form>
+              <v-select
+                label="背景色"
+                v-model="formInput.background"
+                :items="backgroundOptions"
+                item-text="text"
+                item-value="value"
+                @change="updateBackground"
+              />
+              <v-select
+                label="フォント"
+                v-model="formInput.font"
+                :items="fontOptions"
+                item-text="text"
+                item-value="value"
+              />
+              <v-file-input
+                label="アイコン"
+                v-model="uploadedFile"
+                accept="image/*"
+                @change="uploadIcon"
+              />
+              <v-text-field
+                label="プレイヤーネーム"
+                v-model="formInput.playerName"
+              />
+              <v-select
+                label="性別"
+                v-model="formInput.gender"
+                :items="genderOptions"
+              />
+              <v-text-field
+                label="好きな色"
+                v-model="formInput.favoriteColor"
+              />
+              <v-text-field label="活動地域" v-model="formInput.activityArea" />
+              <v-select
+                label="プレイスタイル"
+                v-model="formInput.playStyle"
+                :items="playStyleOptions"
+                multiple
+                chips
+              />
+              <v-select
+                label="要望&お知らせ"
+                v-model="formInput.notice"
+                :items="noticeOptions"
+                multiple
+                chips
+              />
+              <v-select
+                label="フォーマット"
+                v-model="formInput.playingFormat"
+                :items="playingFormatOptions"
+                multiple
+                chips
+              />
+              <v-text-field
+                v-if="formInput.playingFormat.includes('その他')"
+                label="その他のフォーマット"
+                v-model="formInput.otherFormat"
+              />
+              <v-textarea
+                label="フリースペース"
+                v-model="formInput.freeSpace"
+              />
+            </v-form>
+          </section>
+          <footer class="footer footer-md d-none d-md-block">
+            運営:
             <a
               href="https://www.hareruyamtg.com/ja/"
               target="_blank"
               rel="noopener"
-              >株式会社晴れる屋</a
+              >晴れる屋</a
+            ><a @click.prevent="termsModal = true">利用規約</a>
+          </footer>
+          <section class="step d-block d-md-none">
+            <stepTitle number="2" text="画像を保存する" />
+            <div v-if="isMobile">
+              <div class="step-description">
+                画像を長押しして保存しましょう。
+              </div>
+              <img
+                :src="imgSrc"
+                alt="MTG履歴書"
+                width="800"
+                height="450"
+                class="preview"
+              />
+            </div>
+            <div v-if="!isMobile">
+              <div class="step-description">
+                ボタンをクリックして画像を保存しましょう。
+              </div>
+              <v-btn color="primary" block @click="saveImage"
+                ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+              >
+            </div>
+          </section>
+          <section class="step d-block d-md-none">
+            <stepTitle number="3" text="SNSでシェアする" />
+            <div class="step-description">
+              保存した画像を添付してSNSでシェアしましょう。
+            </div>
+            <v-btn color="#1D9BF0" block dark @click="shareTwitter"
+              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+            >
+          </section>
+          <footer class="footer d-block d-md-none">
+            運営:
+            <a
+              href="https://www.hareruyamtg.com/ja/"
+              target="_blank"
+              rel="noopener"
+              >晴れる屋</a
             ><a @click.prevent="termsModal = true">利用規約</a>
           </footer>
         </div>
@@ -186,8 +253,12 @@
 
 <script>
 import VueCropper from "vue-cropperjs";
-import termsText from "./components/termsText.vue";
 import "cropperjs/dist/cropper.css";
+
+import isMobile from "ismobilejs";
+
+import termsText from "./components/termsText.vue";
+import stepTitle from "./components/stepTitle.vue";
 
 const fontSizeAdjustment = (text, invaliantLength, width) => {
   return text.length > invaliantLength ? width / text.length : 24;
@@ -195,8 +266,9 @@ const fontSizeAdjustment = (text, invaliantLength, width) => {
 
 export default {
   name: "App",
-  components: { VueCropper, termsText },
+  components: { VueCropper, termsText, stepTitle },
   data: () => ({
+    isMobile: isMobile().any,
     imgSrc: "",
     uploadedFile: null,
     croppedIcon: null,
@@ -426,9 +498,20 @@ export default {
         "check"
       );
     },
+    saveImage() {
+      const link = document.createElement("a");
+      link.download = "mtgprofile";
+      link.href = this.imgSrc;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
     shareTwitter() {
-      const shareURL =
-        "https://twitter.com/intent/tweet?url=https://resume.hareruyamtg.com&text=%20%23MTG履歴書";
+      let notice = "";
+      this.formInput.notice.forEach((option) => {
+        notice = notice + "%20%23" + option;
+      });
+      const shareURL = `https://twitter.com/intent/tweet?url=https://profile.hareruyamtg.com&text=%20%23MTGプロフィール${notice}`;
       location.href = shareURL;
     },
   },
@@ -458,11 +541,18 @@ export default {
 };
 </script>
 
+<style lang="scss">
+html {
+  overflow-y: auto !important;
+}
+</style>
+
 <style lang="scss" scoped>
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&family=Noto+Serif+JP:wght@700&family=Yusei+Magic&display=swap");
 
 #app {
-  background: #ddd;
+  background: #f7f7f7;
+  color: #333333;
 }
 
 .container {
@@ -477,7 +567,7 @@ export default {
   .preview-wrapper {
     margin-right: 1.5rem;
     .preview {
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
   }
   .form-wrapper {
@@ -508,6 +598,9 @@ export default {
 
 .btn-wrapper {
   text-align: left;
+  button + button {
+    margin-left: 1rem;
+  }
 }
 
 .footer {
@@ -527,13 +620,29 @@ export default {
   }
 }
 .footer-md {
-  position: absolute;
   padding: 0;
-  bottom: 0.75rem;
   text-align: left;
 }
 
-.v-card__title {
-  font-weight: 700;
+.step + .step {
+  margin-top: 2rem;
+}
+.step-description {
+  margin: 0.75rem 0 1rem 0;
+}
+.step-md {
+  display: flex;
+  margin-bottom: 0;
+  align-items: flex-end;
+  + .step-md {
+    margin-top: 1.5rem;
+  }
+  .step-description {
+    line-height: 1;
+    margin-bottom: 0;
+  }
+  > div {
+    margin-right: 1rem;
+  }
 }
 </style>
