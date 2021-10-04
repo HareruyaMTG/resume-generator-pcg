@@ -65,7 +65,11 @@
                   ボタンをクリックして画像を保存しましょう。
                 </div>
               </div>
-              <v-btn color="primary" v-if="!isMobile" @click="saveImage"
+              <v-btn
+                color="primary"
+                v-if="!isMobile"
+                @click="saveImage"
+                data-ga="button-image"
                 ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
               >
             </div>
@@ -76,7 +80,11 @@
                   保存した画像を添付してSNSでシェアしましょう。
                 </div>
               </div>
-              <v-btn color="#1D9BF0" dark @click="shareTwitter"
+              <v-btn
+                color="#1D9BF0"
+                dark
+                @click="shareTwitter"
+                data-ga="button-share"
                 ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
               >
             </div>
@@ -168,8 +176,11 @@
               href="https://www.hareruyamtg.com/ja/"
               target="_blank"
               rel="noopener"
+              data-ga="link-hareruya"
               >晴れる屋</a
-            ><a @click.prevent="termsModal = true">利用規約</a>
+            ><a @click.prevent="termsModal = true" data-ga="link-terms"
+              >利用規約</a
+            >
           </footer>
           <section class="step d-block d-md-none">
             <stepTitle number="2" text="画像を保存する" />
@@ -189,7 +200,11 @@
               <div class="step-description">
                 ボタンをクリックして画像を保存しましょう。
               </div>
-              <v-btn color="primary" block @click="saveImage"
+              <v-btn
+                color="primary"
+                block
+                @click="saveImage"
+                data-ga="button-image"
                 ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
               >
             </div>
@@ -199,7 +214,12 @@
             <div class="step-description">
               保存した画像を添付してSNSでシェアしましょう。
             </div>
-            <v-btn color="#1D9BF0" block dark @click="shareTwitter"
+            <v-btn
+              color="#1D9BF0"
+              block
+              dark
+              @click="shareTwitter"
+              data-ga="button-share"
               ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
             >
           </section>
@@ -209,8 +229,11 @@
               href="https://www.hareruyamtg.com/ja/"
               target="_blank"
               rel="noopener"
+              data-ga="link-hareruya"
               >晴れる屋</a
-            ><a @click.prevent="termsModal = true">利用規約</a>
+            ><a @click.prevent="termsModal = true" data-ga="link-terms"
+              >利用規約</a
+            >
           </footer>
         </div>
       </v-container>
