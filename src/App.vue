@@ -442,8 +442,11 @@ export default {
       document.body.removeChild(link);
     },
     shareTwitter() {
-      const shareURL =
-        "https://twitter.com/intent/tweet?url=https://resume.hareruyamtg.com&text=%20%23MTG履歴書";
+      let notice = "";
+      this.formInput.notice.forEach((option) => {
+        notice = notice + "%20%23" + option;
+      });
+      const shareURL = `https://twitter.com/intent/tweet?url=https://resume.hareruyamtg.com&text=%20%23MTGプロフィール${notice}`;
       location.href = shareURL;
     },
   },
