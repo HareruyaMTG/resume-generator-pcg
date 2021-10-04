@@ -81,18 +81,10 @@
               >
             </div>
           </div>
-          <footer class="footer footer-md d-none d-md-block">
-            <a
-              href="https://www.hareruyamtg.com/ja/"
-              target="_blank"
-              rel="noopener"
-              >株式会社晴れる屋</a
-            ><a @click.prevent="termsModal = true">利用規約</a>
-          </footer>
         </div>
         <div class="form-wrapper">
           <section class="step">
-            <div v-if="isMobile">
+            <div class="d-block d-md-none">
               <stepTitle number="1" text="情報を入力する" />
               <div class="step-description">
                 情報を入力して画像を作成しましょう。
@@ -166,6 +158,15 @@
               />
             </v-form>
           </section>
+          <footer class="footer footer-md d-none d-md-block">
+            運営:
+            <a
+              href="https://www.hareruyamtg.com/ja/"
+              target="_blank"
+              rel="noopener"
+              >晴れる屋</a
+            ><a @click.prevent="termsModal = true">利用規約</a>
+          </footer>
           <section class="step d-block d-md-none">
             <stepTitle number="2" text="画像を保存する" />
             <div v-if="isMobile">
@@ -199,11 +200,12 @@
             >
           </section>
           <footer class="footer d-block d-md-none">
+            運営:
             <a
               href="https://www.hareruyamtg.com/ja/"
               target="_blank"
               rel="noopener"
-              >株式会社晴れる屋</a
+              >晴れる屋</a
             ><a @click.prevent="termsModal = true">利用規約</a>
           </footer>
         </div>
@@ -509,7 +511,7 @@ export default {
       this.formInput.notice.forEach((option) => {
         notice = notice + "%20%23" + option;
       });
-      const shareURL = `https://twitter.com/intent/tweet?url=https://resume.hareruyamtg.com&text=%20%23MTGプロフィール${notice}`;
+      const shareURL = `https://twitter.com/intent/tweet?url=https://profile.hareruyamtg.com&text=%20%23MTGプロフィール${notice}`;
       location.href = shareURL;
     },
   },
@@ -549,7 +551,7 @@ html {
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&family=Noto+Serif+JP:wght@700&family=Yusei+Magic&display=swap");
 
 #app {
-  background: #ddd;
+  background: #f7f7f7;
   color: #333333;
 }
 
@@ -618,26 +620,29 @@ html {
   }
 }
 .footer-md {
-  position: absolute;
   padding: 0;
-  bottom: 0.75rem;
   text-align: left;
 }
 
-.step {
-  margin-bottom: 2rem;
+.step + .step {
+  margin-top: 2rem;
 }
 .step-description {
   margin: 0.75rem 0 1rem 0;
 }
 .step-md {
   display: flex;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   align-items: flex-end;
-  justify-content: space-between;
+  + .step-md {
+    margin-top: 1.5rem;
+  }
   .step-description {
     line-height: 1;
     margin-bottom: 0;
+  }
+  > div {
+    margin-right: 1rem;
   }
 }
 </style>
