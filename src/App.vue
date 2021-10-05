@@ -70,7 +70,8 @@
                 v-if="!isMobile"
                 @click="saveImage"
                 data-ga="button-image"
-                ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+                ><v-icon left>{{ downloadIcon }}</v-icon
+                >画像を保存する</v-btn
               >
             </div>
             <div class="step step-md">
@@ -85,7 +86,8 @@
                 dark
                 @click="shareTwitter"
                 data-ga="button-share"
-                ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+                ><v-icon dark left>{{ twitterIcon }}</v-icon
+                >シェアする</v-btn
               >
             </div>
           </div>
@@ -205,7 +207,8 @@
                 block
                 @click="saveImage"
                 data-ga="button-image"
-                ><v-icon left>mdi-download</v-icon>画像を保存する</v-btn
+                ><v-icon left>{{ downloadIcon }}</v-icon
+                >画像を保存する</v-btn
               >
             </div>
           </section>
@@ -220,7 +223,8 @@
               dark
               @click="shareTwitter"
               data-ga="button-share"
-              ><v-icon dark left>mdi-twitter</v-icon>シェアする</v-btn
+              ><v-icon dark left>{{ twitterIcon }}</v-icon
+              >シェアする</v-btn
             >
           </section>
           <footer class="footer d-block d-md-none">
@@ -287,6 +291,8 @@ import isMobile from "ismobilejs";
 import termsText from "./components/termsText.vue";
 import stepTitle from "./components/stepTitle.vue";
 
+import { mdiDownload, mdiTwitter } from "@mdi/js";
+
 const fontSizeAdjustment = (text, invaliantLength, width) => {
   return text.length > invaliantLength ? width / text.length : 24;
 };
@@ -301,6 +307,8 @@ export default {
     croppedIcon: null,
     cropperModal: false,
     termsModal: false,
+    downloadIcon: mdiDownload,
+    twitterIcon: mdiTwitter,
     formInput: {
       background: "w",
       font: "Yusei Magic",
