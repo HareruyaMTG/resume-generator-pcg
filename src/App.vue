@@ -283,7 +283,7 @@
 </template>
 
 <script>
-import VueCropper from "vue-cropperjs";
+const VueCropper = () => import("vue-cropperjs");
 import "cropperjs/dist/cropper.css";
 
 import isMobile from "ismobilejs";
