@@ -284,7 +284,7 @@
 
 <script>
 const VueCropper = () => import("vue-cropperjs");
-import "cropperjs/dist/cropper.css";
+(async () => require("cropperjs/dist/cropper.css"))();
 
 import isMobile from "ismobilejs";
 
