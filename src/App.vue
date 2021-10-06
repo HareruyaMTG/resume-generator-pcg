@@ -288,8 +288,8 @@ import "cropperjs/dist/cropper.css";
 
 import isMobile from "ismobilejs";
 
-import termsText from "./components/termsText.vue";
-import stepTitle from "./components/stepTitle.vue";
+const termsText = () => import("@/components/termsText.vue");
+const stepTitle = () => import("@/components/stepTitle.vue");
 
 import { mdiDownload, mdiTwitter } from "@mdi/js";
 
