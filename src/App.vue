@@ -283,13 +283,13 @@
 </template>
 
 <script>
-import VueCropper from "vue-cropperjs";
-import "cropperjs/dist/cropper.css";
+const VueCropper = () => import("vue-cropperjs");
+(async () => require("cropperjs/dist/cropper.css"))();
 
 import isMobile from "ismobilejs";
 
-import termsText from "./components/termsText.vue";
-import stepTitle from "./components/stepTitle.vue";
+const termsText = () => import("@/components/termsText.vue");
+const stepTitle = () => import("@/components/stepTitle.vue");
 
 import { mdiDownload, mdiTwitter } from "@mdi/js";
 
