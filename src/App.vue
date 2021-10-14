@@ -361,7 +361,7 @@ export default {
       "パイオニア",
       "モダン",
       "レガシー",
-      "ヴィンテージ",
+      "リミテッド",
       "統率者",
       "その他",
     ],
@@ -532,14 +532,8 @@ export default {
     },
     updateBackground() {
       const color = this.formInput.background;
-      this.mountImage(
-        require(`@/assets/twitter_2107_MTGRirekisho_${color}.png`),
-        "background"
-      );
-      this.mountImage(
-        require(`@/assets/twitter_2107_MTGRirekishoReten_${color}.png`),
-        "check"
-      );
+      this.mountImage(require(`@/assets/bg_${color}.png`), "background");
+      this.mountImage(require(`@/assets/check_${color}.png`), "check");
     },
     saveImage() {
       const link = document.createElement("a");
