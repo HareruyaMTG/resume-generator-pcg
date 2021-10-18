@@ -600,18 +600,17 @@ html {
 }
 .container.is-md {
   display: flex;
-  overflow-y: hidden;
+  align-items: flex-start;
   .preview-wrapper {
     margin-right: 1.5rem;
+    position: sticky;
+    top: 0;
     .preview {
       margin-bottom: 1rem;
     }
   }
   .form-wrapper {
-    height: 100vh;
     padding: 0.75rem 0;
-    overflow-x: hidden;
-    overflow-y: scroll;
     flex-basis: 32rem;
   }
 }
