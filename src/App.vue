@@ -325,10 +325,9 @@ export default {
     },
     backgroundOptions: [
       { text: "白", value: "w" },
-      { text: "青", value: "u" },
-      { text: "黒", value: "b" },
       { text: "赤", value: "r" },
       { text: "緑", value: "g" },
+      { text: "青", value: "b" },
     ],
     textColor: {
       w: "#3D1A00",
