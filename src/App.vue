@@ -31,7 +31,6 @@
               />
               <konva-text :config="favoriteColorConfig" />
               <konva-text :config="activityAreaConfig" />
-              <konva-text :config="playStyleConfig" />
               <konva-image
                 v-for="(item, index) in noticeConfig"
                 :key="`notice-${index}`"
@@ -40,6 +39,11 @@
               <konva-image
                 v-for="(item, index) in favoriteTypeConfig"
                 :key="`type-${index}`"
+                :config="item"
+              />
+              <konva-image
+                v-for="(item, index) in playStyleConfig"
+                :key="`style-${index}`"
                 :config="item"
               />
               <konva-text :config="freeSpaceConfig" />
@@ -134,14 +138,6 @@
               />
               <v-text-field label="活動地域" v-model="formInput.activityArea" />
               <v-select
-                label="プレイスタイル"
-                v-model="formInput.playStyle"
-                :items="playStyleOptions"
-                multiple
-                chips
-                deletable-chips
-              />
-              <v-select
                 label="要望&お知らせ"
                 v-model="formInput.notice"
                 :items="noticeOptions"
@@ -153,6 +149,14 @@
                 label="好きなタイプ"
                 v-model="formInput.favoriteType"
                 :items="favoriteTypeOptions"
+                multiple
+                chips
+                deletable-chips
+              />
+              <v-select
+                label="プレイスタイル"
+                v-model="formInput.playStyle"
+                :items="playStyleOptions"
                 multiple
                 chips
                 deletable-chips
@@ -332,7 +336,6 @@ export default {
       { text: "源ノ明朝", value: "Noto Serif JP" },
     ],
     genderOptions: ["男性", "女性", "指定しない"],
-    playStyleOptions: ["初心者", "カジュアル", "競技", "コレクター"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
@@ -355,6 +358,19 @@ export default {
       "フェアリー",
       "ドラゴン",
       "無色",
+    ],
+    playStyleOptions: [
+      "初心者",
+      "カジュアル",
+      "競技",
+      "親子",
+      "対戦",
+      "雑談",
+      "大会",
+      "交流会",
+      "リモート対戦",
+      "相談",
+      "コレクション",
     ],
     stageConfig: {
       width: 800,
@@ -426,21 +442,6 @@ export default {
       const y = 104 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
-    playStyleConfig() {
-      const playStyleOptions = Array.from(this.playStyleOptions);
-      const text = Array.from(this.formInput.playStyle)
-        .sort(function (a, b) {
-          if (playStyleOptions.indexOf(a) < playStyleOptions.indexOf(b)) {
-            return -1;
-          }
-          return 1;
-        })
-        .toString();
-      const fontSize = fontSizeAdjustment(text, 13, 290);
-      const x = 505;
-      const y = 184 - fontSize / 2;
-      return { ...this.fontConfig, text, fontSize, x, y };
-    },
     noticeConfig() {
       const checkArray = [];
       const x = 22;
@@ -458,6 +459,15 @@ export default {
         typeArray.push({ ...this.checkConfig, x, y: 253 + 16 * index });
       });
       return typeArray;
+    },
+    playStyleConfig() {
+      const styleArray = [];
+      const x = 300;
+      this.formInput.playStyle.forEach((item) => {
+        const index = this.playStyleOptions.indexOf(item);
+        styleArray.push({ ...this.checkConfig, x, y: 253 + 16 * index });
+      });
+      return styleArray;
     },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
