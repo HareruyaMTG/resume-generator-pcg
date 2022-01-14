@@ -31,6 +31,15 @@
               />
               <konva-text :config="activityAreaConfig" />
               <konva-image
+                v-for="(item, index) in regulationConfig"
+                :key="`regulation-${index}`"
+                :config="item"
+              />
+              <konva-text
+                v-if="formInput.regulation.includes('その他')"
+                :config="otherRegulationConfig"
+              />
+              <konva-image
                 v-for="(item, index) in noticeConfig"
                 :key="`notice-${index}`"
                 :config="item"
@@ -132,6 +141,19 @@
                 :items="genderOptions"
               />
               <v-text-field label="活動地域" v-model="formInput.activityArea" />
+              <v-select
+                label="レギュレーション"
+                v-model="formInput.regulation"
+                :items="regulationOptions"
+                multiple
+                chips
+                deletable-chips
+              />
+              <v-text-field
+                v-if="formInput.regulation.includes('その他')"
+                label="その他のレギュレーション"
+                v-model="formInput.otherRegulation"
+              />
               <v-select
                 label="要望&お知らせ"
                 v-model="formInput.notice"
@@ -306,6 +328,8 @@ export default {
       playerName: "",
       gender: "指定しない",
       activityArea: "",
+      regulation: "",
+      otherRegulation: "",
       playStyle: [],
       notice: [],
       favoriteType: [],
@@ -336,6 +360,7 @@ export default {
       { text: "源ノ明朝", value: "Noto Serif JP" },
     ],
     genderOptions: ["男性", "女性", "指定しない"],
+    regulationOptions: ["スタンダード", "エクストラ", "その他"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
@@ -437,6 +462,26 @@ export default {
       const fontSize = fontSizeAdjustment(text, 12, 290);
       const x = 505;
       const y = 104 - fontSize / 2;
+      return { ...this.fontConfig, text, fontSize, x, y };
+    },
+    regulationConfig() {
+      const regulationArray = [];
+      if (this.formInput.regulation.includes("スタンダード")) {
+        regulationArray.push({ ...this.checkConfig, x: 208, y: 174 });
+      }
+      if (this.formInput.regulation.includes("エクストラ")) {
+        regulationArray.push({ ...this.checkConfig, x: 317, y: 174 });
+      }
+      if (this.formInput.regulation.includes("その他")) {
+        regulationArray.push({ ...this.checkConfig, x: 208, y: 192 });
+      }
+      return regulationArray;
+    },
+    otherRegulationConfig() {
+      const text = this.formInput.otherRegulation;
+      const fontSize = 14;
+      const x = 282;
+      const y = 192;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     noticeConfig() {
