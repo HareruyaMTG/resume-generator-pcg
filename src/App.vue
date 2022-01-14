@@ -346,12 +346,11 @@ export default {
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
-      "MTG雑談したい",
+      "雑談したい",
       "デッキ相談したい",
       "YouTubeやってます",
       "ブログやってます",
-      "アリーナやってます",
-      "MOやってます",
+      "Twitterやってます",
       "コレクション自慢したい",
     ],
     playingFormatOptions: [
@@ -454,7 +453,7 @@ export default {
       const x = 22;
       this.formInput.notice.forEach((item) => {
         const index = this.noticeOptions.indexOf(item);
-        checkArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
+        checkArray.push({ ...this.checkConfig, x, y: 253 + 23 * index });
       });
       return checkArray;
     },
