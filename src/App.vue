@@ -428,9 +428,9 @@ export default {
       };
     },
     playerIconConfig() {
-      const x = 15;
-      const y = 60;
-      const size = 150;
+      const x = 16;
+      const y = 63;
+      const size = 148;
       const image = this.croppedIcon;
       return {
         image,
