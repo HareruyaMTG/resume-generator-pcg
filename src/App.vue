@@ -38,13 +38,9 @@
                 :config="item"
               />
               <konva-image
-                v-for="(item, index) in playingFormatConfig"
-                :key="`format-${index}`"
+                v-for="(item, index) in favoriteTypeConfig"
+                :key="`type-${index}`"
                 :config="item"
-              />
-              <konva-text
-                v-if="formInput.playingFormat.includes('その他')"
-                :config="otherFormatConfig"
               />
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
@@ -154,17 +150,12 @@
                 deletable-chips
               />
               <v-select
-                label="フォーマット"
-                v-model="formInput.playingFormat"
-                :items="playingFormatOptions"
+                label="好きなタイプ"
+                v-model="formInput.favoriteType"
+                :items="favoriteTypeOptions"
                 multiple
                 chips
                 deletable-chips
-              />
-              <v-text-field
-                v-if="formInput.playingFormat.includes('その他')"
-                label="その他のフォーマット"
-                v-model="formInput.otherFormat"
               />
               <v-textarea
                 label="フリースペース"
@@ -319,8 +310,7 @@ export default {
       activityArea: "",
       playStyle: [],
       notice: [],
-      playingFormat: [],
-      otherFormat: "",
+      favoriteType: [],
       freeSpace: "",
     },
     backgroundOptions: [
@@ -353,15 +343,18 @@ export default {
       "Twitterやってます",
       "コレクション自慢したい",
     ],
-    playingFormatOptions: [
-      "スタンダード",
-      "ヒストリック",
-      "パイオニア",
-      "モダン",
-      "レガシー",
-      "リミテッド",
-      "統率者",
-      "その他",
+    favoriteTypeOptions: [
+      "草",
+      "炎",
+      "水",
+      "雷",
+      "超",
+      "闘",
+      "悪",
+      "鋼",
+      "フェアリー",
+      "ドラゴン",
+      "無色",
     ],
     stageConfig: {
       width: 800,
@@ -457,21 +450,14 @@ export default {
       });
       return checkArray;
     },
-    playingFormatConfig() {
-      const formatArray = [];
+    favoriteTypeConfig() {
+      const typeArray = [];
       const x = 191;
-      this.formInput.playingFormat.forEach((item) => {
-        const index = this.playingFormatOptions.indexOf(item);
-        formatArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
+      this.formInput.favoriteType.forEach((item) => {
+        const index = this.favoriteTypeOptions.indexOf(item);
+        typeArray.push({ ...this.checkConfig, x, y: 253 + 16 * index });
       });
-      return formatArray;
-    },
-    otherFormatConfig() {
-      const text = this.formInput.otherFormat;
-      const fontSize = 12;
-      const x = 200;
-      const y = 404;
-      return { ...this.fontConfig, text, fontSize, x, y };
+      return typeArray;
     },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
