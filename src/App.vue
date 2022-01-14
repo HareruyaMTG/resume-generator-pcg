@@ -443,29 +443,29 @@ export default {
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     noticeConfig() {
-      const checkArray = [];
-      const x = 22;
+      const noticeArray = [];
+      const x = 21;
       this.formInput.notice.forEach((item) => {
         const index = this.noticeOptions.indexOf(item);
-        checkArray.push({ ...this.checkConfig, x, y: 253 + 23 * index });
+        noticeArray.push({ ...this.checkConfig, x, y: 255 + 23 * index });
       });
-      return checkArray;
+      return noticeArray;
     },
     favoriteTypeConfig() {
       const typeArray = [];
-      const x = 191;
+      const x = 189;
       this.formInput.favoriteType.forEach((item) => {
         const index = this.favoriteTypeOptions.indexOf(item);
-        typeArray.push({ ...this.checkConfig, x, y: 253 + 16 * index });
+        typeArray.push({ ...this.checkConfig, x, y: 255 + 16 * index });
       });
       return typeArray;
     },
     playStyleConfig() {
       const styleArray = [];
-      const x = 300;
+      const x = 330;
       this.formInput.playStyle.forEach((item) => {
         const index = this.playStyleOptions.indexOf(item);
-        styleArray.push({ ...this.checkConfig, x, y: 253 + 16 * index });
+        styleArray.push({ ...this.checkConfig, x, y: 255 + 16 * index });
       });
       return styleArray;
     },
@@ -527,7 +527,7 @@ export default {
     updateBackground() {
       const color = this.formInput.background;
       this.mountImage(require(`@/assets/bg_${color}.png`), "background");
-      this.mountImage(require(`@/assets/check_${color}.png`), "check");
+      this.mountImage(require(`@/assets/check.png`), "check");
     },
     saveImage() {
       const link = document.createElement("a");
