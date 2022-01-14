@@ -29,7 +29,6 @@
                   fill: fillColor[formInput.background],
                 }"
               />
-              <konva-text :config="favoriteColorConfig" />
               <konva-text :config="activityAreaConfig" />
               <konva-image
                 v-for="(item, index) in noticeConfig"
@@ -131,10 +130,6 @@
                 label="性別"
                 v-model="formInput.gender"
                 :items="genderOptions"
-              />
-              <v-text-field
-                label="好きな色"
-                v-model="formInput.favoriteColor"
               />
               <v-text-field label="活動地域" v-model="formInput.activityArea" />
               <v-select
@@ -310,7 +305,6 @@ export default {
       playerIcon: "",
       playerName: "",
       gender: "指定しない",
-      favoriteColor: "",
       activityArea: "",
       playStyle: [],
       notice: [],
@@ -437,13 +431,6 @@ export default {
         config.image = this.image.checkW;
       }
       return config;
-    },
-    favoriteColorConfig() {
-      const text = this.formInput.favoriteColor;
-      const fontSize = fontSizeAdjustment(text, 13, 290);
-      const x = 190;
-      const y = 184 - fontSize / 2;
-      return { ...this.fontConfig, text, fontSize, x, y };
     },
     activityAreaConfig() {
       const text = this.formInput.activityArea;
