@@ -22,11 +22,11 @@
               <konva-rect
                 v-if="formInput.gender === '指定しない'"
                 :config="{
-                  x: 285,
-                  y: 66,
+                  x: 305,
+                  y: 70,
                   width: 82,
                   height: 16,
-                  fill: '#ffffff',
+                  fill: fillColor[formInput.background],
                 }"
               />
               <konva-text :config="favoriteColorConfig" />
@@ -330,6 +330,12 @@ export default {
       r: "#3D0B00",
       g: "#233823",
     },
+    fillColor: {
+      w: "#FBE5A5",
+      b: "#3054AC",
+      r: "#F80E00",
+      g: "#179517",
+    },
     fontOptions: [
       { text: "油性マジック", value: "Yusei Magic" },
       { text: "源ノ角ゴシック", value: "Noto Sans JP" },
@@ -378,6 +384,7 @@ export default {
     },
     image: {
       check: null,
+      checkW: null,
       background: null,
     },
   }),
@@ -422,9 +429,12 @@ export default {
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     genderConfig() {
-      const config = { ...this.checkConfig, x: 285, y: 68 };
+      const config = { ...this.checkConfig, x: 304, y: 72 };
       if (this.formInput.gender === "女性") {
-        config.x = 328;
+        config.x = 347;
+      }
+      if (this.formInput.background !== "w") {
+        config.image = this.image.checkW;
       }
       return config;
     },
@@ -528,6 +538,7 @@ export default {
       const color = this.formInput.background;
       this.mountImage(require(`@/assets/bg_${color}.png`), "background");
       this.mountImage(require(`@/assets/check.png`), "check");
+      this.mountImage(require(`@/assets/check_w.png`), "checkW");
     },
     saveImage() {
       const link = document.createElement("a");
