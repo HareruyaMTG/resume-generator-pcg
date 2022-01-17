@@ -19,33 +19,37 @@
                 v-if="formInput.gender !== '指定しない'"
                 :config="genderConfig"
               />
-              <konva-rect
-                v-if="formInput.gender === '指定しない'"
-                :config="{
-                  x: 285,
-                  y: 66,
-                  width: 82,
-                  height: 16,
-                  fill: '#ffffff',
-                }"
+              <konva-image
+                :config="{ image: image.gender }"
+                v-if="formInput.gender !== '指定しない'"
               />
-              <konva-text :config="favoriteColorConfig" />
               <konva-text :config="activityAreaConfig" />
-              <konva-text :config="playStyleConfig" />
+              <konva-image
+                v-for="(item, index) in regulationConfig"
+                :key="`regulation-${index}`"
+                :config="item"
+              />
+              <konva-text
+                v-if="formInput.regulation.includes('その他')"
+                :config="otherRegulationConfig"
+              />
+              <konva-text :config="historyConfig" />
               <konva-image
                 v-for="(item, index) in noticeConfig"
                 :key="`notice-${index}`"
                 :config="item"
               />
               <konva-image
-                v-for="(item, index) in playingFormatConfig"
-                :key="`format-${index}`"
+                v-for="(item, index) in favoriteTypeConfig"
+                :key="`type-${index}`"
                 :config="item"
               />
-              <konva-text
-                v-if="formInput.playingFormat.includes('その他')"
-                :config="otherFormatConfig"
+              <konva-image
+                v-for="(item, index) in playStyleConfig"
+                :key="`style-${index}`"
+                :config="item"
               />
+              <konva-text :config="favoritePokemonConfig" />
               <konva-text :config="freeSpaceConfig" />
             </konva-layer>
           </konva-stage>
@@ -109,13 +113,6 @@
                 item-value="value"
                 @change="updateBackground"
               />
-              <v-select
-                label="フォント"
-                v-model="formInput.font"
-                :items="fontOptions"
-                item-text="text"
-                item-value="value"
-              />
               <v-file-input
                 label="アイコン"
                 v-model="uploadedFile"
@@ -132,19 +129,21 @@
                 v-model="formInput.gender"
                 :items="genderOptions"
               />
-              <v-text-field
-                label="好きな色"
-                v-model="formInput.favoriteColor"
-              />
               <v-text-field label="活動地域" v-model="formInput.activityArea" />
               <v-select
-                label="プレイスタイル"
-                v-model="formInput.playStyle"
-                :items="playStyleOptions"
+                label="レギュレーション"
+                v-model="formInput.regulation"
+                :items="regulationOptions"
                 multiple
                 chips
                 deletable-chips
               />
+              <v-text-field
+                v-if="formInput.regulation.includes('その他')"
+                label="その他のレギュレーション"
+                v-model="formInput.otherRegulation"
+              />
+              <v-text-field label="ポケカ歴" v-model="formInput.history" />
               <v-select
                 label="要望&お知らせ"
                 v-model="formInput.notice"
@@ -154,17 +153,24 @@
                 deletable-chips
               />
               <v-select
-                label="フォーマット"
-                v-model="formInput.playingFormat"
-                :items="playingFormatOptions"
+                label="好きなタイプ"
+                v-model="formInput.favoriteType"
+                :items="favoriteTypeOptions"
+                multiple
+                chips
+                deletable-chips
+              />
+              <v-select
+                label="プレイスタイル"
+                v-model="formInput.playStyle"
+                :items="playStyleOptions"
                 multiple
                 chips
                 deletable-chips
               />
               <v-text-field
-                v-if="formInput.playingFormat.includes('その他')"
-                label="その他のフォーマット"
-                v-model="formInput.otherFormat"
+                label="好きなポケモン"
+                v-model="formInput.favoritePokemon"
               />
               <v-textarea
                 label="フリースペース"
@@ -315,55 +321,65 @@ export default {
       playerIcon: "",
       playerName: "",
       gender: "指定しない",
-      favoriteColor: "",
       activityArea: "",
+      regulation: "",
+      otherRegulation: "",
+      history: "",
       playStyle: [],
       notice: [],
-      playingFormat: [],
-      otherFormat: "",
+      favoriteType: [],
+      favoritePokemon: "",
       freeSpace: "",
     },
     backgroundOptions: [
       { text: "白", value: "w" },
-      { text: "青", value: "u" },
-      { text: "黒", value: "b" },
       { text: "赤", value: "r" },
       { text: "緑", value: "g" },
+      { text: "青", value: "b" },
     ],
-    textColor: {
-      w: "#3D1A00",
-      u: "#143E51",
-      b: "#431838",
-      r: "#3D0B00",
-      g: "#233823",
+    fillColor: {
+      w: "#FBE5A5",
+      b: "#3054AC",
+      r: "#F80E00",
+      g: "#179517",
     },
-    fontOptions: [
-      { text: "油性マジック", value: "Yusei Magic" },
-      { text: "源ノ角ゴシック", value: "Noto Sans JP" },
-      { text: "源ノ明朝", value: "Noto Serif JP" },
-    ],
     genderOptions: ["男性", "女性", "指定しない"],
-    playStyleOptions: ["初心者", "カジュアル", "競技", "コレクター"],
+    regulationOptions: ["スタンダード", "エクストラ", "その他"],
     noticeOptions: [
       "対戦したい",
       "大会に参加したい",
-      "MTG雑談したい",
+      "雑談したい",
       "デッキ相談したい",
       "YouTubeやってます",
       "ブログやってます",
-      "アリーナやってます",
-      "MOやってます",
+      "Twitterやってます",
       "コレクション自慢したい",
     ],
-    playingFormatOptions: [
-      "スタンダード",
-      "ヒストリック",
-      "パイオニア",
-      "モダン",
-      "レガシー",
-      "リミテッド",
-      "統率者",
-      "その他",
+    favoriteTypeOptions: [
+      "草",
+      "炎",
+      "水",
+      "雷",
+      "超",
+      "闘",
+      "悪",
+      "鋼",
+      "フェアリー",
+      "ドラゴン",
+      "無色",
+    ],
+    playStyleOptions: [
+      "初心者",
+      "カジュアル",
+      "競技",
+      "親子",
+      "対戦",
+      "雑談",
+      "大会",
+      "交流会",
+      "リモート対戦",
+      "相談",
+      "コレクション",
     ],
     stageConfig: {
       width: 800,
@@ -371,7 +387,9 @@ export default {
     },
     image: {
       check: null,
+      checkW: null,
       background: null,
+      gender: null,
     },
   }),
   computed: {
@@ -382,8 +400,8 @@ export default {
     fontConfig() {
       return {
         fontSize: 24,
-        fontFamily: this.formInput.font,
-        fill: this.textColor[this.formInput.background],
+        fontFamily: "Yusei Magic",
+        fill: "#333333",
         wrap: "char",
       };
     },
@@ -395,9 +413,9 @@ export default {
       };
     },
     playerIconConfig() {
-      const x = 15;
-      const y = 60;
-      const size = 150;
+      const x = 16;
+      const y = 63;
+      const size = 148;
       const image = this.croppedIcon;
       return {
         image,
@@ -409,78 +427,95 @@ export default {
     },
     playerNameConfig() {
       const text = this.formInput.playerName;
-      const fontSize = fontSizeAdjustment(text, 13, 290);
-      const x = 190;
-      const y = 104 - fontSize / 2;
+      const fontSize = fontSizeAdjustment(text, 10, 240);
+      const x = 200;
+      const y = 110 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     genderConfig() {
-      const config = { ...this.checkConfig, x: 285, y: 68 };
+      const config = { ...this.checkConfig, x: 304, y: 72 };
       if (this.formInput.gender === "女性") {
-        config.x = 328;
+        config.x = 347;
+      }
+      if (this.formInput.background !== "w") {
+        config.image = this.image.checkW;
       }
       return config;
     },
-    favoriteColorConfig() {
-      const text = this.formInput.favoriteColor;
-      const fontSize = fontSizeAdjustment(text, 13, 290);
-      const x = 190;
-      const y = 184 - fontSize / 2;
-      return { ...this.fontConfig, text, fontSize, x, y };
-    },
     activityAreaConfig() {
       const text = this.formInput.activityArea;
-      const fontSize = fontSizeAdjustment(text, 12, 290);
-      const x = 505;
-      const y = 104 - fontSize / 2;
+      const fontSize = fontSizeAdjustment(text, 14, 336);
+      const x = 459;
+      const y = 110 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
-    playStyleConfig() {
-      const playStyleOptions = Array.from(this.playStyleOptions);
-      const text = Array.from(this.formInput.playStyle)
-        .sort(function (a, b) {
-          if (playStyleOptions.indexOf(a) < playStyleOptions.indexOf(b)) {
-            return -1;
-          }
-          return 1;
-        })
-        .toString();
-      const fontSize = fontSizeAdjustment(text, 13, 290);
-      const x = 505;
-      const y = 184 - fontSize / 2;
+    regulationConfig() {
+      const regulationArray = [];
+      if (this.formInput.regulation.includes("スタンダード")) {
+        regulationArray.push({ ...this.checkConfig, x: 208, y: 174 });
+      }
+      if (this.formInput.regulation.includes("エクストラ")) {
+        regulationArray.push({ ...this.checkConfig, x: 317, y: 174 });
+      }
+      if (this.formInput.regulation.includes("その他")) {
+        regulationArray.push({ ...this.checkConfig, x: 208, y: 192 });
+      }
+      return regulationArray;
+    },
+    otherRegulationConfig() {
+      const text = this.formInput.otherRegulation;
+      const fontSize = 14;
+      const x = 282;
+      const y = 192;
+      return { ...this.fontConfig, text, fontSize, x, y };
+    },
+    historyConfig() {
+      const text = this.formInput.history;
+      const fontSize = fontSizeAdjustment(text, 14, 336);
+      const x = 459;
+      const y = 190 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     noticeConfig() {
-      const checkArray = [];
-      const x = 22;
+      const noticeArray = [];
+      const x = 21;
       this.formInput.notice.forEach((item) => {
         const index = this.noticeOptions.indexOf(item);
-        checkArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
+        noticeArray.push({ ...this.checkConfig, x, y: 255 + 23 * index });
       });
-      return checkArray;
+      return noticeArray;
     },
-    playingFormatConfig() {
-      const formatArray = [];
-      const x = 191;
-      this.formInput.playingFormat.forEach((item) => {
-        const index = this.playingFormatOptions.indexOf(item);
-        formatArray.push({ ...this.checkConfig, x, y: 253 + 19 * index });
+    favoriteTypeConfig() {
+      const typeArray = [];
+      const x = 189;
+      this.formInput.favoriteType.forEach((item) => {
+        const index = this.favoriteTypeOptions.indexOf(item);
+        typeArray.push({ ...this.checkConfig, x, y: 255 + 16 * index });
       });
-      return formatArray;
+      return typeArray;
     },
-    otherFormatConfig() {
-      const text = this.formInput.otherFormat;
-      const fontSize = 12;
-      const x = 200;
-      const y = 404;
+    playStyleConfig() {
+      const styleArray = [];
+      const x = 330;
+      this.formInput.playStyle.forEach((item) => {
+        const index = this.playStyleOptions.indexOf(item);
+        styleArray.push({ ...this.checkConfig, x, y: 255 + 16 * index });
+      });
+      return styleArray;
+    },
+    favoritePokemonConfig() {
+      const text = this.formInput.favoritePokemon;
+      const fontSize = fontSizeAdjustment(text, 15, 360);
+      const x = 449;
+      const y = 270 - fontSize / 2;
       return { ...this.fontConfig, text, fontSize, x, y };
     },
     freeSpaceConfig() {
       const text = this.formInput.freeSpace;
-      const x = 330;
-      const y = 252;
-      const width = 440;
-      const height = 180;
+      const x = 449;
+      const y = 330;
+      const width = 330;
+      const height = 100;
       return {
         ...this.fontConfig,
         text,
@@ -533,7 +568,12 @@ export default {
     updateBackground() {
       const color = this.formInput.background;
       this.mountImage(require(`@/assets/bg_${color}.png`), "background");
-      this.mountImage(require(`@/assets/check_${color}.png`), "check");
+      this.mountImage(require(`@/assets/check.png`), "check");
+      this.mountImage(require(`@/assets/check_w.png`), "checkW");
+      this.mountImage(
+        require(`@/assets/gender_${color === "w" ? "b" : "w"}.png`),
+        "gender"
+      );
     },
     saveImage() {
       const link = document.createElement("a");
