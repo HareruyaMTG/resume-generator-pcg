@@ -19,15 +19,9 @@
                 v-if="formInput.gender !== '指定しない'"
                 :config="genderConfig"
               />
-              <konva-rect
-                v-if="formInput.gender === '指定しない'"
-                :config="{
-                  x: 305,
-                  y: 70,
-                  width: 82,
-                  height: 16,
-                  fill: fillColor[formInput.background],
-                }"
+              <konva-image
+                :config="{ image: image.gender }"
+                v-if="formInput.gender !== '指定しない'"
               />
               <konva-text :config="activityAreaConfig" />
               <konva-image
@@ -395,6 +389,7 @@ export default {
       check: null,
       checkW: null,
       background: null,
+      gender: null,
     },
   }),
   computed: {
@@ -575,6 +570,10 @@ export default {
       this.mountImage(require(`@/assets/bg_${color}.png`), "background");
       this.mountImage(require(`@/assets/check.png`), "check");
       this.mountImage(require(`@/assets/check_w.png`), "checkW");
+      this.mountImage(
+        require(`@/assets/gender_${color === "w" ? "b" : "w"}.png`),
+        "gender"
+      );
     },
     saveImage() {
       const link = document.createElement("a");
