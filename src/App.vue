@@ -5,7 +5,7 @@
         <div class="preview-wrapper">
           <img
             :src="imgSrc"
-            alt="MTG履歴書"
+            alt="ポケカ履歴書"
             width="800"
             height="450"
             class="preview"
@@ -181,7 +181,7 @@
           <footer class="footer footer-md d-none d-md-block">
             運営:
             <a
-              href="https://www.hareruyamtg.com/ja/"
+              href="https://www.hareruya2.com"
               target="_blank"
               rel="noopener"
               data-ga="link-hareruya"
@@ -198,7 +198,7 @@
               </div>
               <img
                 :src="imgSrc"
-                alt="MTG履歴書"
+                alt="ポケカ履歴書"
                 width="800"
                 height="450"
                 class="preview"
@@ -236,7 +236,7 @@
           <footer class="footer d-block d-md-none">
             運営:
             <a
-              href="https://www.hareruyamtg.com/ja/"
+              href="https://www.hareruya2.com"
               target="_blank"
               rel="noopener"
               data-ga="link-hareruya"
@@ -577,7 +577,7 @@ export default {
     },
     saveImage() {
       const link = document.createElement("a");
-      link.download = "mtgprofile";
+      link.download = "pcgresume";
       link.href = this.imgSrc;
       document.body.appendChild(link);
       link.click();
@@ -588,7 +588,7 @@ export default {
       this.formInput.notice.forEach((option) => {
         notice = notice + "%20%23" + option;
       });
-      const shareURL = `https://twitter.com/intent/tweet?url=https://profile.hareruyamtg.com&text=%20%23MTGプロフィール${notice}`;
+      const shareURL = `https://twitter.com/intent/tweet?url=https://resume.hareruya2.com&text=%20%23ポケカ履歴書${notice}`;
       window.open(shareURL);
     },
   },
