@@ -5,7 +5,7 @@
         <div class="preview-wrapper">
           <img
             :src="imgSrc"
-            alt="MTG履歴書"
+            alt="ポケカ履歴書"
             width="800"
             height="450"
             class="preview"
@@ -198,7 +198,7 @@
               </div>
               <img
                 :src="imgSrc"
-                alt="MTG履歴書"
+                alt="ポケカ履歴書"
                 width="800"
                 height="450"
                 class="preview"
@@ -577,7 +577,7 @@ export default {
     },
     saveImage() {
       const link = document.createElement("a");
-      link.download = "mtgprofile";
+      link.download = "pcgresume";
       link.href = this.imgSrc;
       document.body.appendChild(link);
       link.click();
