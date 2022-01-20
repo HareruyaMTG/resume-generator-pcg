@@ -588,7 +588,7 @@ export default {
       this.formInput.notice.forEach((option) => {
         notice = notice + "%20%23" + option;
       });
-      const shareURL = `https://twitter.com/intent/tweet?url=https://resume.hareruya2.com&text=%20%23ポケカ履歴書${notice}`;
+      const shareURL = `https://twitter.com/intent/tweet?url=https://pcgresume.hareruya.app&text=%20%23ポケカ履歴書${notice}`;
       window.open(shareURL);
     },
   },
